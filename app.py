@@ -1,5 +1,6 @@
 import streamlit as st
-from pypdf import PdfReader
+
+from pdf_processor import extract_text_from_pdf
 
 st.title("AI Document Analyst")
 
@@ -12,21 +13,13 @@ if uploaded_file:
 
     st.success("PDF uploaded successfully!")
 
-    reader = PdfReader(uploaded_file)
-
-    text = ""
-
-    for page in reader.pages:
-        extracted_text = page.extract_text()
-
-        if extracted_text:
-            text += extracted_text
+    text, page_count = extract_text_from_pdf(uploaded_file)
 
     word_count = len(text.split())
 
     st.subheader("Document Statistics")
 
-    st.write(f"Pages: {len(reader.pages)}")
+    st.write(f"Pages: {page_count}")
     st.write(f"Words: {word_count}")
 
     st.subheader("Extracted Text")
@@ -34,4 +27,5 @@ if uploaded_file:
     st.text_area(
         "Document Content",
         text,
-        height=300)
+        height=300
+    )
