@@ -127,3 +127,39 @@ def generate_career_paths(text):
     )
 
     return response.choices[0].message.content
+
+def generate_career_roadmap(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an expert career strategist."
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Analyze this resume and provide:
+
+                1. Current Career Positioning
+                2. Best Next Role (0-12 months)
+                3. Recommended 2-Year Goal
+                4. Recommended 5-Year Goal
+                5. Skills Needed
+                6. Learning Order
+                7. Biggest Career Accelerator
+
+                Keep recommendations realistic,
+                concise and actionable.
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=700
+    )
+
+    return response.choices[0].message.content

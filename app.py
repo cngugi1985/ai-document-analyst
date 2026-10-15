@@ -5,7 +5,8 @@ from ai_service import (
     generate_summary,
     generate_improvements,
     generate_resume_score,
-    generate_career_paths
+    generate_career_paths,
+    generate_career_roadmap
 )
 
 st.title("AI Document Analyst")
@@ -26,6 +27,7 @@ if uploaded_file:
         improvements = generate_improvements(text)
         resume_score = generate_resume_score(text)
         career_paths = generate_career_paths(text)
+        career_roadmap = generate_career_roadmap(text)
     st.metric(
     label="Resume Score",
     value=resume_score
@@ -39,6 +41,9 @@ if uploaded_file:
     st.subheader("Recommended Career Paths")
 
     st.write(career_paths)
+    st.subheader("Career Roadmap")
+
+    st.write(career_roadmap)
 
     st.subheader("Document Statistics")
     st.write(f"Pages: {page_count}")
