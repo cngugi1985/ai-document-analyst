@@ -95,3 +95,35 @@ Do not use ### symbols.
     )
 
     return response.choices[0].message.content
+
+def generate_career_paths(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an expert career strategist."
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Analyze this resume and provide:
+
+                1. Top 3 recommended career paths
+                2. Why the candidate is qualified
+                3. Missing skills
+                4. Estimated preparation time
+
+                Keep the output concise and actionable.
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=500
+    )
+
+    return response.choices[0].message.content

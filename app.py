@@ -1,7 +1,12 @@
 import streamlit as st
 
 from pdf_processor import extract_text_from_pdf
-from ai_service import generate_summary, generate_improvements, generate_resume_score
+from ai_service import (
+    generate_summary,
+    generate_improvements,
+    generate_resume_score,
+    generate_career_paths
+)
 
 st.title("AI Document Analyst")
 
@@ -20,7 +25,7 @@ if uploaded_file:
         summary = generate_summary(text)
         improvements = generate_improvements(text)
         resume_score = generate_resume_score(text)
-
+        career_paths = generate_career_paths(text)
     st.metric(
     label="Resume Score",
     value=resume_score
@@ -31,6 +36,9 @@ if uploaded_file:
 
     st.subheader("Resume Improvements")
     st.write(improvements)
+    st.subheader("Recommended Career Paths")
+
+    st.write(career_paths)
 
     st.subheader("Document Statistics")
     st.write(f"Pages: {page_count}")
