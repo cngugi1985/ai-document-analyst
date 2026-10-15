@@ -59,3 +59,31 @@ def generate_improvements(text):
     )
 
     return response.choices[0].message.content
+
+def generate_resume_score(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an expert resume reviewer."
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Review this resume and provide:
+
+                1. An overall score out of 100
+                2. A brief explanation of the score
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=150
+    )
+
+    return response.choices[0].message.content
