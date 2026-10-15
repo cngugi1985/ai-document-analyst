@@ -163,3 +163,38 @@ def generate_career_roadmap(text):
     )
 
     return response.choices[0].message.content
+
+def generate_career_blindspots(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an expert executive career coach."
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Analyze this resume.
+
+                Identify:
+
+                1. Hidden strengths
+                2. Undersold skills
+                3. Career opportunities the candidate
+                   may be overlooking
+                4. Why these opportunities are valuable
+
+                Be specific and actionable.
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=600
+    )
+
+    return response.choices[0].message.content
