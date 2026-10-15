@@ -72,10 +72,18 @@ def generate_resume_score(text):
             {
                 "role": "user",
                 "content": f"""
-                Review this resume and provide:
+                Review this resume.
 
-                1. An overall score out of 100
-                2. A brief explanation of the score
+Return exactly this format:
+
+Score: X/100
+
+Explanation:
+2-3 sentences explaining the score.
+
+Do not use markdown.
+Do not use headings.
+Do not use ### symbols.
 
                 Resume:
 
