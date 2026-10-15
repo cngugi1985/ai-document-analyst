@@ -21,8 +21,10 @@ if uploaded_file:
         improvements = generate_improvements(text)
         resume_score = generate_resume_score(text)
 
-    st.subheader("Resume Score")
-    st.write(resume_score)
+    st.metric(
+    label="Resume Score",
+    value=resume_score
+)
 
     st.subheader("AI Summary")
     st.write(summary)
