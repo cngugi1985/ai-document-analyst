@@ -18,15 +18,22 @@ if uploaded_file:
 
     with st.spinner("Analyzing resume..."):
         summary = ai_service.generate_summary(text)
-        improvements = ai_service.generate_improvements(text)
-        resume_score = ai_service.generate_resume_score(text)
-        career_blindspots = ai_service.generate_career_blindspots(text)
-        career_paths = ai_service.generate_career_paths(text)
-        career_roadmap = ai_service.generate_career_roadmap(text)
+
+    improvements = ai_service.generate_improvements(text)
+
+    resume_score = ai_service.generate_resume_score(text)
+
+    career_blindspots = ai_service.generate_career_blindspots(text)
+
+    skill_gap_analysis = ai_service.generate_skill_gap_analysis(text)
+
+    career_paths = ai_service.generate_career_paths(text)
+
+    career_roadmap = ai_service.generate_career_roadmap(text)
     st.metric(
-    label="Resume Score",
-    value=resume_score
-)
+        label="Resume Score",
+        value=resume_score
+    )
 
     st.subheader("AI Summary")
     st.write(summary)
@@ -41,6 +48,8 @@ if uploaded_file:
     st.subheader("Career Roadmap")
 
     st.write(career_roadmap)
+    st.subheader("Skill Gap Analysis")
+    st.write(skill_gap_analysis)
 
     st.subheader("Document Statistics")
     st.write(f"Pages: {page_count}")

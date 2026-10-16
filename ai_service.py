@@ -198,3 +198,34 @@ def generate_career_blindspots(text):
     )
 
     return response.choices[0].message.content
+
+def generate_skill_gap_analysis(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an expert career strategist."
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Analyze this resume and identify:
+
+                1. Current strengths
+                2. Skill gaps
+                3. Highest-impact skills to learn
+                4. Which skills will produce the biggest career growth
+                5. Recommended learning order
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=700
+    )
+
+    return response.choices[0].message.content
