@@ -229,3 +229,36 @@ def generate_skill_gap_analysis(text):
     )
 
     return response.choices[0].message.content
+def generate_action_plan(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an expert career coach."
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Based on this resume:
+
+                Create a practical 30-day action plan.
+
+                Provide:
+                1. Top 5 actions
+                2. Skill priority
+                3. Expected career impact
+
+                Keep it concise.
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=500
+    )
+
+    return response.choices[0].message.content

@@ -32,12 +32,14 @@ if uploaded_file:
 
     career_blindspots = ai_service.generate_career_blindspots(text)
 
-    skill_gap_analysis = ai_service.generate_skill_gap_analysis(text)
+    
 
     career_paths = ai_service.generate_career_paths(text)
 
     career_roadmap = ai_service.generate_career_roadmap(text)
 
+    skill_gap_analysis = ai_service.generate_skill_gap_analysis(text)
+    action_plan = ai_service.generate_action_plan(text)
     with overview_tab:
         st.metric(
             label="Resume Score",
@@ -56,9 +58,12 @@ if uploaded_file:
 
         st.write(career_paths)
     with growth_tab:
-        st.subheader("Career Roadmap")
+        st.subheader("30-Day Action Plan")
+        st.write(action_plan)
 
+        st.subheader("Career Roadmap")
         st.write(career_roadmap)
+        
         st.subheader("Skill Gap Analysis")
         st.write(skill_gap_analysis)
 
