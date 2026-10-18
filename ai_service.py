@@ -262,3 +262,37 @@ def generate_action_plan(text):
     )
 
     return response.choices[0].message.content
+
+def generate_recommended_sectors(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a labour market and career strategy expert."
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Analyze this resume.
+
+                Recommend:
+
+                1. Top 5 industries/sectors
+                2. Why the candidate fits them
+                3. Typical roles available
+                4. Career growth potential
+
+                Keep the response concise.
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=600
+    )
+
+    return response.choices[0].message.content

@@ -45,6 +45,8 @@ if uploaded_file:
 
         action_plan = ai_service.generate_action_plan(text)
 
+        recommended_sectors = ai_service.generate_recommended_sectors(text)
+
     # ------------------------
     # OVERVIEW TAB
     # ------------------------
@@ -95,21 +97,8 @@ if uploaded_file:
 
     with market_tab:
 
-        st.subheader("Market Intelligence")
-
-        st.write(
-            """
-            Coming next:
-
-            • Recommended sectors
-            • Salary ranges
-            • Hiring demand
-            • Industry outlook
-            • Recommended certifications
-            • Learning providers
-            • Market data with sources
-            """
-        )
+        st.subheader("Recommended Sectors")
+        st.write(recommended_sectors)
 
     # ------------------------
     # DOCUMENT DETAILS
