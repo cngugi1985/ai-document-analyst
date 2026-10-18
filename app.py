@@ -37,9 +37,10 @@ if uploaded_file:
     career_paths = ai_service.generate_career_paths(text)
 
     career_roadmap = ai_service.generate_career_roadmap(text)
+    action_plan = ai_service.generate_action_plan(text)
 
     skill_gap_analysis = ai_service.generate_skill_gap_analysis(text)
-    action_plan = ai_service.generate_action_plan(text)
+   
     with overview_tab:
         st.metric(
             label="Resume Score",
