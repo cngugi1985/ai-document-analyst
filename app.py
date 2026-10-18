@@ -18,31 +18,39 @@ overview_tab, career_tab, growth_tab, market_tab = st.tabs(
         "Market Intelligence"
     ]
 )
+
 if uploaded_file:
+
     st.success("PDF uploaded successfully!")
 
     text, page_count = extract_text_from_pdf(uploaded_file)
+
     word_count = len(text.split())
 
     with st.spinner("Analyzing resume..."):
+
         summary = ai_service.generate_summary(text)
 
-    improvements = ai_service.generate_improvements(text)
+        improvements = ai_service.generate_improvements(text)
 
-    resume_score = ai_service.generate_resume_score(text)
+        resume_score = ai_service.generate_resume_score(text)
 
-    career_blindspots = ai_service.generate_career_blindspots(text)
+        career_blindspots = ai_service.generate_career_blindspots(text)
 
-    
+        career_paths = ai_service.generate_career_paths(text)
 
-    career_paths = ai_service.generate_career_paths(text)
+        career_roadmap = ai_service.generate_career_roadmap(text)
 
-    career_roadmap = ai_service.generate_career_roadmap(text)
-    action_plan = ai_service.generate_action_plan(text)
+        skill_gap_analysis = ai_service.generate_skill_gap_analysis(text)
 
-    skill_gap_analysis = ai_service.generate_skill_gap_analysis(text)
-   
+        action_plan = ai_service.generate_action_plan(text)
+
+    # ------------------------
+    # OVERVIEW TAB
+    # ------------------------
+
     with overview_tab:
+
         st.metric(
             label="Resume Score",
             value=resume_score
@@ -53,38 +61,69 @@ if uploaded_file:
 
         st.subheader("Resume Improvements")
         st.write(improvements)
-    with career_tab:
-        st.subheader("Career Blindspots")
-        st.write(career_blindspots)
-        st.subheader("Recommended Career Paths")
 
+    # ------------------------
+    # CAREER INTELLIGENCE TAB
+    # ------------------------
+
+    with career_tab:
+
+        st.subheader("Career Blind Spots")
+        st.write(career_blindspots)
+
+        st.subheader("Recommended Career Paths")
         st.write(career_paths)
+
+    # ------------------------
+    # GROWTH PLAN TAB
+    # ------------------------
+
     with growth_tab:
+
         st.subheader("30-Day Action Plan")
         st.write(action_plan)
 
         st.subheader("Career Roadmap")
         st.write(career_roadmap)
-        
+
         st.subheader("Skill Gap Analysis")
         st.write(skill_gap_analysis)
 
+    # ------------------------
+    # MARKET INTELLIGENCE TAB
+    # ------------------------
+
     with market_tab:
+
         st.subheader("Market Intelligence")
 
         st.write(
-            "Future version: salary ranges, demand trends, "
-            "recommended sectors and verified market data."
+            """
+            Coming next:
+
+            • Recommended sectors
+            • Salary ranges
+            • Hiring demand
+            • Industry outlook
+            • Recommended certifications
+            • Learning providers
+            • Market data with sources
+            """
         )
 
-        st.subheader("Document Statistics")
-        st.write(f"Pages: {page_count}")
-        st.write(f"Words: {word_count}")
+    # ------------------------
+    # DOCUMENT DETAILS
+    # ------------------------
 
-        st.subheader("Extracted Text")
+    st.subheader("Document Statistics")
 
-        st.text_area(
-            "Document Content",
-            text,
-            height=300
-        )
+    st.write(f"Pages: {page_count}")
+    st.write(f"Words: {word_count}")
+
+    st.subheader("Extracted Text")
+
+    st.text_area(
+        "Document Content",
+        text,
+        height=300
+    )
