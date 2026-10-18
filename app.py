@@ -98,7 +98,23 @@ if uploaded_file:
     with market_tab:
 
         st.subheader("Recommended Sectors")
+
         st.write(recommended_sectors)
+
+        st.subheader("Market Snapshot")
+
+        st.info(
+            """
+            Coming Soon:
+
+            • Salary ranges by state
+            • Hiring demand
+            • Industry growth outlook
+            • Recommended certifications
+            • Recommended courses
+            • Source citations
+            """
+        )
 
     # ------------------------
     # DOCUMENT DETAILS
