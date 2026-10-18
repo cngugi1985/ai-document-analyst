@@ -10,11 +10,12 @@ uploaded_file = st.file_uploader(
     type=["pdf"]
 )
 
-overview_tab, career_tab, growth_tab = st.tabs(
+overview_tab, career_tab, growth_tab, market_tab = st.tabs(
     [
         "Overview",
         "Career Intelligence",
-        "Growth Plan"
+        "Growth Plan",
+        "Market Intelligence"
     ]
 )
 if uploaded_file:
@@ -67,6 +68,14 @@ if uploaded_file:
         
         st.subheader("Skill Gap Analysis")
         st.write(skill_gap_analysis)
+
+    with market_tab:
+        st.subheader("Market Intelligence")
+
+        st.write(
+            "Future version: salary ranges, demand trends, "
+            "recommended sectors and verified market data."
+        )
 
         st.subheader("Document Statistics")
         st.write(f"Pages: {page_count}")
