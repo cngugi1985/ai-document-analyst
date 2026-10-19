@@ -119,6 +119,11 @@ if uploaded_file:
             f"Growth Outlook: {sector_data['growth']}"
         )
 
+        st.subheader("Recommended Certifications")
+
+        for certification in sector_data["certifications"]:
+            st.write(f"• {certification}")
+
     # ------------------------
     # DOCUMENT DETAILS
     # ------------------------

@@ -2,7 +2,12 @@ MARKET_DATA = {
 	"Industrial Automation": {
 		"salary_range": "$110k - $170k",
 		"demand": "High",
-		"growth": "Strong"
+		"growth": "Strong",
+		"certifications": [
+    "AZ-900",
+    "AWS Cloud Practitioner",
+    "Google Data Analytics"
+]
 	}
 }
 
