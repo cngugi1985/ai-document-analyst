@@ -1,8 +1,65 @@
-import streamlit as st
+class _DummyTab:
+    def __init__(self, label):
+        self.label = label
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+
+class st:
+    """A small, self-contained streamlit-like API used by this app."""
+
+    @staticmethod
+    def title(message):
+        print(f"[TITLE] {message}")
+
+    @staticmethod
+    def file_uploader(label, type=None):
+        return None
+
+    @staticmethod
+    def tabs(labels):
+        return tuple(_DummyTab(label) for label in labels)
+
+    @staticmethod
+    def success(message):
+        print(f"[SUCCESS] {message}")
+
+    @staticmethod
+    def spinner(message):
+        class _Spinner:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+        return _Spinner()
+
+    @staticmethod
+    def metric(label, value):
+        print(f"[METRIC] {label}: {value}")
+
+    @staticmethod
+    def subheader(label):
+        print(f"[SUBHEADER] {label}")
+
+    @staticmethod
+    def write(*values):
+        print(*values)
+
+    @staticmethod
+    def text_area(label, value, height=300):
+        print(f"[TEXT AREA: {label}]\n{value}")
+
 
 from pdf_processor import extract_text_from_pdf
 import ai_service
 import market_data
+import certification_utils
 
 st.title("AI Document Analyst")
 
@@ -50,7 +107,26 @@ if uploaded_file:
 
         primary_sector = ai_service.generate_primary_sector(text)
 
-        sector_data = market_data.get_market_data(primary_sector)
+
+        existing_certifications = ai_service.generate_existing_certifications(text)
+
+    certification_list = existing_certifications.split("\n")
+
+    normalized_certifications = []
+
+    for cert in certification_list:
+
+        normalized_certifications.append(
+            certification_utils.normalize_certification(cert)
+        )
+
+    sector_data = market_data.get_market_data(primary_sector)
+    missing_certifications = (
+    certification_utils.find_missing_certifications(
+        certification_list,
+        sector_data["certifications"]
+    )
+)
 
     # ------------------------
     # OVERVIEW TAB
@@ -108,6 +184,14 @@ if uploaded_file:
 
         st.write(f"Primary Sector: {primary_sector}")
 
+        #st.subheader("Existing Certifications Found")
+
+        #st.write(existing_certifications)
+
+        #st.subheader("Normalized Certifications")
+
+        #st.write(normalized_certifications)
+
 
         st.subheader("Market Snapshot")
 
@@ -123,10 +207,10 @@ if uploaded_file:
             f"Growth Outlook: {sector_data['growth']}"
         )
 
-        st.subheader("Recommended Certifications")
+        st.subheader("Certification Gap Analysis")
 
-        for certification in sector_data["certifications"]:
-            st.write(f"• {certification}")
+        for certification in missing_certifications:
+            st.write(f"⚠ {certification}")
 
     # ------------------------
     # DOCUMENT DETAILS

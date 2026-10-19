@@ -329,3 +329,30 @@ def generate_primary_sector(text):
     )
 
     return response.choices[0].message.content.strip()
+
+def generate_existing_certifications(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": """
+                Extract certifications from this resume.
+
+                Return only certification names.
+
+                One per line.
+
+                No explanations.
+                """
+            },
+            {
+                "role": "user",
+                "content": text
+            }
+        ],
+        max_tokens=200
+    )
+
+    return response.choices[0].message.content
