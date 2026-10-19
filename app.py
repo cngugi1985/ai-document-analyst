@@ -2,6 +2,7 @@ import streamlit as st
 
 from pdf_processor import extract_text_from_pdf
 import ai_service
+import market_data
 
 st.title("AI Document Analyst")
 
@@ -46,6 +47,8 @@ if uploaded_file:
         action_plan = ai_service.generate_action_plan(text)
 
         recommended_sectors = ai_service.generate_recommended_sectors(text)
+
+        sector_data = market_data.get_market_data("Industrial Automation")
 
     # ------------------------
     # OVERVIEW TAB
@@ -101,19 +104,19 @@ if uploaded_file:
 
         st.write(recommended_sectors)
 
+
         st.subheader("Market Snapshot")
 
-        st.info(
-            """
-            Coming Soon:
+        st.write(
+            f"Salary Range: {sector_data['salary_range']}"
+        )
 
-            • Salary ranges by state
-            • Hiring demand
-            • Industry growth outlook
-            • Recommended certifications
-            • Recommended courses
-            • Source citations
-            """
+        st.write(
+            f"Demand: {sector_data['demand']}"
+        )
+
+        st.write(
+            f"Growth Outlook: {sector_data['growth']}"
         )
 
     # ------------------------
