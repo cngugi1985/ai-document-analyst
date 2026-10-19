@@ -1,5 +1,6 @@
 import streamlit as st
 
+import ai_service
 from pdf_processor import extract_text_from_pdf
 
 st.set_page_config(
@@ -20,7 +21,26 @@ if uploaded_file:
 
     word_count = len(text.split())
 
+    with st.spinner("Analyzing resume..."):
+        summary = ai_service.generate_summary(text)
+
+        improvements = ai_service.generate_improvements(text)
+
+        resume_score = ai_service.generate_resume_score(text)
+
     st.success("PDF processed successfully!")
+
+    st.subheader("Resume Score")
+
+    st.write(resume_score)
+
+    st.subheader("AI Summary")
+
+    st.write(summary)
+
+    st.subheader("Resume Improvements")
+
+    st.write(improvements)
 
     st.subheader("Document Statistics")
 
