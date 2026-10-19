@@ -7,17 +7,28 @@ MARKET_DATA = {
     "AZ-900",
     "AWS Cloud Practitioner",
     "Google Data Analytics"
-]
-	}
+		]
+	},
+	"Construction Technology": {
+    "salary_range": "$95k - $145k",
+    "demand": "Moderate",
+    "growth": "Growing",
+    "certifications": [
+        "PMP",
+        "OSHA 30",
+        "Autodesk Construction Cloud"
+    ]
+    }
 }
 
 
 def get_market_data(sector):
 	return MARKET_DATA.get(
-		sector,
-		{
-			"salary_range": "Unknown",
-			"demand": "Unknown",
-			"growth": "Unknown"
-		}
-	)
+    sector,
+    {
+        "salary_range": "Unknown",
+        "demand": "Unknown",
+        "growth": "Unknown",
+        "certifications": []
+    }
+)
