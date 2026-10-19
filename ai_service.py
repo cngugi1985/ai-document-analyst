@@ -296,3 +296,36 @@ def generate_recommended_sectors(text):
     )
 
     return response.choices[0].message.content
+
+def generate_primary_sector(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": """
+                You are a labour market expert.
+
+                Return ONLY ONE sector.
+
+                Allowed responses:
+
+                Industrial Automation
+                Advanced Manufacturing
+                Construction Technology
+                Infrastructure Technology
+                AI Operations
+
+                Return only the sector name.
+                """
+            },
+            {
+                "role": "user",
+                "content": text
+            }
+        ],
+        max_tokens=20
+    )
+
+    return response.choices[0].message.content.strip()

@@ -48,7 +48,9 @@ if uploaded_file:
 
         recommended_sectors = ai_service.generate_recommended_sectors(text)
 
-        sector_data = market_data.get_market_data("Industrial Automation")
+        primary_sector = ai_service.generate_primary_sector(text)
+
+        sector_data = market_data.get_market_data(primary_sector)
 
     # ------------------------
     # OVERVIEW TAB
@@ -103,6 +105,8 @@ if uploaded_file:
         st.subheader("Recommended Sectors")
 
         st.write(recommended_sectors)
+
+        st.write(f"Primary Sector: {primary_sector}")
 
 
         st.subheader("Market Snapshot")
