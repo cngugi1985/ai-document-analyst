@@ -22,13 +22,12 @@ if uploaded_file:
     word_count = len(text.split())
 
     with st.spinner("Analyzing resume..."):
+
         summary = ai_service.generate_summary(text)
 
         improvements = ai_service.generate_improvements(text)
 
         resume_score = ai_service.generate_resume_score(text)
-
-    st.success("PDF processed successfully!")
 
     st.subheader("Resume Score")
 

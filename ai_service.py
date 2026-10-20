@@ -9,6 +9,20 @@ client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY")
 )
 
+SYSTEM_PROMPT = """
+You are an expert resume reviewer and career coach.
+
+Address the user directly using 'you' and 'your'.
+
+Never refer to the candidate by name.
+
+Always write in second person.
+
+Provide specific, actionable recommendations.
+
+Avoid generic corporate buzzwords.
+"""
+
 
 def generate_summary(text):
 
@@ -24,7 +38,8 @@ def generate_summary(text):
                 "content": f"Summarise this document:\n\n{text}"
             }
         ],
-        max_tokens=400
+        max_tokens=800,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
@@ -55,10 +70,12 @@ def generate_improvements(text):
                 """
             }
         ],
-        max_tokens=300
+        max_tokens=800,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
+
 
 def generate_resume_score(text):
 
@@ -91,10 +108,11 @@ Do not use ### symbols.
                 """
             }
         ],
-        max_tokens=150
+        max_tokens=300
     )
 
     return response.choices[0].message.content
+
 
 def generate_career_paths(text):
 
@@ -123,10 +141,12 @@ def generate_career_paths(text):
                 """
             }
         ],
-        max_tokens=500
+        max_tokens=800,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
+
 
 def generate_career_roadmap(text):
 
@@ -159,10 +179,12 @@ def generate_career_roadmap(text):
                 """
             }
         ],
-        max_tokens=700
+        max_tokens=800,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
+
 
 def generate_career_blindspots(text):
 
@@ -194,10 +216,12 @@ def generate_career_blindspots(text):
                 """
             }
         ],
-        max_tokens=600
+        max_tokens=800,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
+
 
 def generate_skill_gap_analysis(text):
 
@@ -225,10 +249,13 @@ def generate_skill_gap_analysis(text):
                 """
             }
         ],
-        max_tokens=700
+        max_tokens=800,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
+
+
 def generate_action_plan(text):
 
     response = client.chat.completions.create(
@@ -258,10 +285,12 @@ def generate_action_plan(text):
                 """
             }
         ],
-        max_tokens=500
+        max_tokens=800,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
+
 
 def generate_recommended_sectors(text):
 
@@ -292,10 +321,12 @@ def generate_recommended_sectors(text):
                 """
             }
         ],
-        max_tokens=600
+        max_tokens=800,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
+
 
 def generate_primary_sector(text):
 
@@ -325,10 +356,12 @@ def generate_primary_sector(text):
                 "content": text
             }
         ],
-        max_tokens=20
+        max_tokens=20,
+        temperature=0.3
     )
 
     return response.choices[0].message.content.strip()
+
 
 def generate_existing_certifications(text):
 
@@ -352,7 +385,8 @@ def generate_existing_certifications(text):
                 "content": text
             }
         ],
-        max_tokens=200
+        max_tokens=200,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
