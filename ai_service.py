@@ -31,11 +31,24 @@ def generate_summary(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are a helpful document analyst."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
-                "content": f"Summarise this document:\n\n{text}"
+                "content": f"""
+Analyse this resume and provide a professional summary.
+
+Requirements:
+- Use 'you' and 'your'
+- Never use the candidate's name
+- Never refer to the user in third person
+- Write like a career coach speaking directly to the user
+- Highlight strengths, experience, achievements and growth opportunities
+
+Resume:
+
+{text}
+"""
             }
         ],
         max_tokens=800,
@@ -52,7 +65,7 @@ def generate_improvements(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are a professional resume reviewer."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
@@ -84,7 +97,7 @@ def generate_resume_score(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are an expert resume reviewer."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
@@ -121,7 +134,7 @@ def generate_career_paths(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are an expert career strategist."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
@@ -155,7 +168,7 @@ def generate_career_roadmap(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are an expert career strategist."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
@@ -193,7 +206,7 @@ def generate_career_blindspots(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are an expert executive career coach."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
@@ -230,7 +243,7 @@ def generate_skill_gap_analysis(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are an expert career strategist."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
@@ -263,7 +276,7 @@ def generate_action_plan(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are an expert career coach."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
@@ -299,7 +312,7 @@ def generate_recommended_sectors(text):
         messages=[
             {
                 "role": "system",
-                "content": "You are a labour market and career strategy expert."
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
@@ -335,7 +348,11 @@ def generate_primary_sector(text):
         messages=[
             {
                 "role": "system",
-                "content": """
+                "content": SYSTEM_PROMPT
+            },
+            {
+                "role": "user",
+                "content": f"""
                 You are a labour market expert.
 
                 Return ONLY ONE sector.
