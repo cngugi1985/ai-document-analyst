@@ -1,6 +1,8 @@
 import streamlit as st
 
 import ai_service
+
+import market_data
 from pdf_processor import extract_text_from_pdf
 
 st.set_page_config(
@@ -28,6 +30,9 @@ if uploaded_file:
         skill_gap_analysis = ai_service.generate_skill_gap_analysis(text)
         action_plan = ai_service.generate_action_plan(text)
         career_roadmap = ai_service.generate_career_roadmap(text)
+        primary_sector = ai_service.generate_primary_sector(text)
+        primary_role = ai_service.generate_primary_role(text)
+        market_intelligence = ai_service.generate_market_intelligence(text)
 
     overview_tab, career_tab, growth_tab, market_tab = st.tabs(
         [
@@ -82,4 +87,15 @@ if uploaded_file:
         st.write(career_roadmap)
 
     with market_tab:
-        st.info("Market Intelligence coming next.")
+          st.subheader("Primary Role")
+
+          st.write(primary_role)
+
+          st.subheader("AI Market Intelligence")
+
+          st.text(market_intelligence)
+          st.subheader("Primary Sector")
+
+          st.write(primary_sector)
+
+    ...

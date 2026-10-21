@@ -353,28 +353,71 @@ def generate_primary_sector(text):
             {
                 "role": "user",
                 "content": f"""
-                You are a labour market expert.
+    Analyse this resume.
 
-                Return ONLY ONE sector.
+    Return ONLY the most appropriate career sector.
 
-                Allowed responses:
+    Examples:
+    Software Engineering
+    Data Analytics
+    AI Operations
+    Construction Technology
+    Industrial Automation
 
-                Industrial Automation
-                Advanced Manufacturing
-                Construction Technology
-                Infrastructure Technology
-                AI Operations
+    Return only the sector name.
+    No explanation.
+    No bullet points.
+    No sentences.
 
-                Return only the sector name.
-                """
-            },
-            {
-                "role": "user",
-                "content": text
+    Resume:
+
+    {text}
+    """
             }
         ],
         max_tokens=20,
         temperature=0.3
+    )
+
+    return response.choices[0].message.content.strip()
+
+def generate_primary_role(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Analyse this resume.
+
+                Return ONLY the most suitable job role.
+
+                Examples:
+
+                Software Engineer
+                Data Analyst
+                Technical Program Manager
+                Construction Project Manager
+                Automation Engineer
+
+                Return only the role.
+
+                No explanation.
+                No bullets.
+                No sentences.
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=20
     )
 
     return response.choices[0].message.content.strip()
@@ -387,23 +430,76 @@ def generate_existing_certifications(text):
         messages=[
             {
                 "role": "system",
-                "content": """
-                Extract certifications from this resume.
-
-                Return only certification names.
-
-                One per line.
-
-                No explanations.
-                """
+                "content": SYSTEM_PROMPT
             },
             {
                 "role": "user",
-                "content": text
+                "content": f"""
+                Extract all certifications, licenses,
+                professional credentials and professional
+                designations from this resume.
+
+                Return only a bulleted list.
+
+                Resume:
+
+                {text}
+                """
             }
         ],
-        max_tokens=200,
+        max_tokens=300,
         temperature=0.3
+    )
+
+    return response.choices[0].message.content
+
+def generate_market_intelligence(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Analyse this resume and generate a concise market intelligence dashboard.
+
+Use the following sections exactly:
+
+Primary Role
+Related Industry
+Salary Outlook
+Market Demand
+Growth Outlook
+Recommended Certifications
+High Value Skills To Add
+Immediate Action Items
+
+Use bullet points.
+
+Formatting Rules:
+
+- Use markdown headings and bullet points.
+- Do not use code blocks.
+- Do not use inline code.
+- Do not use HTML tags.
+- Keep formatting clean and simple.
+
+Be concise.
+
+Do not write long paragraphs.
+
+Do not write introductions or conclusions.
+
+Do not exceed 300 words.
+                {text}
+                """
+            }
+        ],
+        max_tokens=800
     )
 
     return response.choices[0].message.content
