@@ -33,6 +33,8 @@ if uploaded_file:
         primary_sector = ai_service.generate_primary_sector(text)
         primary_role = ai_service.generate_primary_role(text)
         market_intelligence = ai_service.generate_market_intelligence(text)
+        existing_certifications = ai_service.generate_existing_certifications(text)
+
 
     overview_tab, career_tab, growth_tab, market_tab = st.tabs(
         [
@@ -87,15 +89,16 @@ if uploaded_file:
         st.write(career_roadmap)
 
     with market_tab:
-          st.subheader("Primary Role")
+        st.subheader("Primary Role")
 
-          st.write(primary_role)
+        st.write(primary_role)
 
-          st.subheader("AI Market Intelligence")
+        st.subheader("AI Market Intelligence")
 
-          st.text(market_intelligence)
-          st.subheader("Primary Sector")
+        st.text(market_intelligence)
+        st.subheader("Primary Sector")
 
-          st.write(primary_sector)
+        st.write(primary_sector)
+        st.subheader("Existing Certifications")
 
-    ...
+        st.write(existing_certifications)
