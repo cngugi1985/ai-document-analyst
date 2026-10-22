@@ -29,11 +29,12 @@ if uploaded_file:
         blind_spots = ai_service.generate_career_blindspots(text)
         skill_gap_analysis = ai_service.generate_skill_gap_analysis(text)
         action_plan = ai_service.generate_action_plan(text)
-        career_roadmap = ai_service.generate_career_roadmap(text)
-        primary_sector = ai_service.generate_primary_sector(text)
         primary_role = ai_service.generate_primary_role(text)
         market_intelligence = ai_service.generate_market_intelligence(text)
         existing_certifications = ai_service.generate_existing_certifications(text)
+        recommended_certifications = (
+    ai_service.generate_recommended_certifications(text)
+)
 
 
     overview_tab, career_tab, growth_tab, market_tab = st.tabs(
@@ -46,10 +47,12 @@ if uploaded_file:
     )
 
     with overview_tab:
-        st.subheader("Resume Score")
-        st.write(resume_score)
+        st.metric(
+    "Resume Score",
+    resume_score
+)
 
-        st.subheader("AI Summary")
+        st.subheader("Summary")
         st.write(summary)
 
         st.subheader("Resume Improvements")
@@ -80,25 +83,20 @@ if uploaded_file:
 
         st.write(skill_gap_analysis)
 
-        st.subheader("30-Day Action Plan")
+        st.subheader("60-Day Action Plan")
 
         st.write(action_plan)
 
-        st.subheader("Career Roadmap")
-
-        st.write(career_roadmap)
-
+        
     with market_tab:
         st.subheader("Primary Role")
 
         st.write(primary_role)
 
-        st.subheader("AI Market Intelligence")
+        st.subheader("Market Research")
 
         st.text(market_intelligence)
-        st.subheader("Primary Sector")
-
-        st.write(primary_sector)
-        st.subheader("Existing Certifications")
-
-        st.write(existing_certifications)
+        
+        
+        
+        

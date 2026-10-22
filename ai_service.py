@@ -73,7 +73,7 @@ def generate_improvements(text):
                 Review this resume.
 
                 Provide:
-                - 5 improvement suggestions
+                - 3 improvement suggestions
                 - Missing keywords
                 - Ways to make achievements stronger
 
@@ -109,7 +109,7 @@ Return exactly this format:
 Score: X/100
 
 Explanation:
-2-3 sentences explaining the score.
+2-3 sentences explaining the score and criteria used to score it.
 
 Do not use markdown.
 Do not use headings.
@@ -121,7 +121,7 @@ Do not use ### symbols.
                 """
             }
         ],
-        max_tokens=300
+        max_tokens=800
     )
 
     return response.choices[0].message.content
@@ -161,42 +161,6 @@ def generate_career_paths(text):
     return response.choices[0].message.content
 
 
-def generate_career_roadmap(text):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": f"""
-                Analyze this resume and provide:
-
-                1. Current Career Positioning
-                2. Best Next Role (0-12 months)
-                3. Recommended 2-Year Goal
-                4. Recommended 5-Year Goal
-                5. Skills Needed
-                6. Learning Order
-                7. Biggest Career Accelerator
-
-                Keep recommendations realistic,
-                concise and actionable.
-
-                Resume:
-
-                {text}
-                """
-            }
-        ],
-        max_tokens=800,
-        temperature=0.3
-    )
-
-    return response.choices[0].message.content
 
 
 def generate_career_blindspots(text):
@@ -253,8 +217,7 @@ def generate_skill_gap_analysis(text):
                 1. Current strengths
                 2. Skill gaps
                 3. Highest-impact skills to learn
-                4. Which skills will produce the biggest career growth
-                5. Recommended learning order
+                4. Recommended learning order
 
                 Resume:
 
@@ -283,12 +246,11 @@ def generate_action_plan(text):
                 "content": f"""
                 Based on this resume:
 
-                Create a practical 30-day action plan.
+                Create a practical 60-day action plan.
 
                 Provide:
-                1. Top 5 actions
-                2. Skill priority
-                3. Expected career impact
+                1. Top 3 actions
+                2. Expected career impact
 
                 Keep it concise.
 
@@ -304,82 +266,6 @@ def generate_action_plan(text):
 
     return response.choices[0].message.content
 
-
-def generate_recommended_sectors(text):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": f"""
-                Analyze this resume.
-
-                Recommend:
-
-                1. Top 5 industries/sectors
-                2. Why the candidate fits them
-                3. Typical roles available
-                4. Career growth potential
-
-                Keep the response concise.
-
-                Resume:
-
-                {text}
-                """
-            }
-        ],
-        max_tokens=800,
-        temperature=0.3
-    )
-
-    return response.choices[0].message.content
-
-
-def generate_primary_sector(text):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": f"""
-    Analyse this resume.
-
-    Return ONLY the most appropriate career sector.
-
-    Examples:
-    Software Engineering
-    Data Analytics
-    AI Operations
-    Construction Technology
-    Industrial Automation
-
-    Return only the sector name.
-    No explanation.
-    No bullet points.
-    No sentences.
-
-    Resume:
-
-    {text}
-    """
-            }
-        ],
-        max_tokens=20,
-        temperature=0.3
-    )
-
-    return response.choices[0].message.content.strip()
 
 def generate_primary_role(text):
 
@@ -453,6 +339,39 @@ def generate_existing_certifications(text):
 
     return response.choices[0].message.content
 
+def generate_recommended_certifications(text):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT
+            },
+            {
+                "role": "user",
+                "content": f"""
+                Based on this resume, recommend the top 5
+                certifications that would most improve career
+                prospects.
+
+                Return only certification names.
+
+                One certification per line.
+
+                No explanations.
+
+                Resume:
+
+                {text}
+                """
+            }
+        ],
+        max_tokens=200
+    )
+
+    return response.choices[0].message.content
+
 def generate_market_intelligence(text):
 
     response = client.chat.completions.create(
@@ -465,36 +384,28 @@ def generate_market_intelligence(text):
             {
                 "role": "user",
                 "content": f"""
-                Analyse this resume and generate a concise market intelligence dashboard.
+                Analyse this resume and Generate a concise career market dashboard.
 
-Use the following sections exactly:
+Include only:
 
 Primary Role
-Related Industry
 Salary Outlook
 Market Demand
 Growth Outlook
 Recommended Certifications
 High Value Skills To Add
-Immediate Action Items
-
-Use bullet points.
 
 Formatting Rules:
 
-- Use markdown headings and bullet points.
-- Do not use code blocks.
-- Do not use inline code.
-- Do not use HTML tags.
-- Keep formatting clean and simple.
+- No paragraphs.
+- No introductions.
+- No conclusions.
+- No # symbols.
+- No markdown headings.
+- Keep responses concise.
+- Use bullet points only for certifications and skills.
+- Maximum 100 words.
 
-Be concise.
-
-Do not write long paragraphs.
-
-Do not write introductions or conclusions.
-
-Do not exceed 300 words.
                 {text}
                 """
             }
