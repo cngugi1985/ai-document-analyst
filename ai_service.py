@@ -235,11 +235,13 @@ def generate_recommended_certifications(text):
 
 Rules:
 - Maximum 3 certifications
-- Always provide the full certification name followed by the acronym in parentheses
+- Certifications only
+- Do not recommend job titles
+- Do not recommend career paths
+- Do not include arrows
+- Do not include progression paths
 - One certification per line
-- No descriptions
-- No bullet explanations
-- No introductions or conclusions
+- Stop after the final certification
 
 Example:
 

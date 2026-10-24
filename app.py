@@ -87,7 +87,22 @@ if uploaded_file:
 
         st.subheader("🎯 Recommended Career Paths")
 
-        st.markdown(career_paths)
+        roles = [role.strip() for role in career_paths.split("↓")]
+
+        path_labels = [
+            "📍 Current Role",
+            "🚀 Next Role",
+            "🏆 Long-Term Goal"
+        ]
+
+        for i, role in enumerate(roles):
+            st.info(f"{path_labels[i]}\n\n{role}")
+
+            if i < len(roles) - 1:
+                st.markdown(
+                    "<h1 style='text-align:center;'>⬇️</h1>",
+                    unsafe_allow_html=True
+                )
 
         st.divider()
 
@@ -103,6 +118,4 @@ if uploaded_file:
 
         st.subheader("🎓 Recommended Certifications")
 
-        st.markdown(
-            recommended_certifications
-        )
+        st.markdown(recommended_certifications)
