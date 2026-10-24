@@ -116,7 +116,11 @@ if uploaded_file:
 
             USD {salary_data['min']} to {salary_data['max']}
 
-            Source: {salary_data['source']}
+            Salary Sources
+
+            • {salary_data['source']}
+            
+            • {salary_data['source_2']}
             """
 
             if i == 0:
