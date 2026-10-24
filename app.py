@@ -108,14 +108,16 @@ if uploaded_file:
             )
 
             card_text = f"""
-{path_labels[i]}
+            {path_labels[i]}
 
-{role}
+            {role}
 
-Annual Compensation
+            Annual Compensation
 
-USD {salary_data['min']} to {salary_data['max']}
-"""
+            USD {salary_data['min']} to {salary_data['max']}
+
+            Source: {salary_data['source']}
+            """
 
             if i == 0:
                 st.info(card_text)
