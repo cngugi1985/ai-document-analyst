@@ -4,11 +4,11 @@ import ai_service
 from pdf_processor import extract_text_from_pdf
 
 st.set_page_config(
-    page_title="AI Career Intelligence",
+    page_title="AI Career Navigator",
     layout="wide"
 )
 
-st.title("🚀 AI Career Intelligence")
+st.title("🚀 AI Career Navigator")
 
 st.markdown("""
 <style>
@@ -24,7 +24,7 @@ div[data-testid="metric-container"] {
 """, unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
-    "Upload Your Resume (PDF)",
+    "Upload Resume (PDF)",
     type=["pdf"]
 )
 
@@ -32,32 +32,25 @@ if uploaded_file:
 
     text, page_count = extract_text_from_pdf(uploaded_file)
 
-    word_count = len(text.split())
+    with st.spinner("Analyzing resume..."):
 
-    with st.spinner("Analyzing your resume..."):
+        resume_score = ai_service.generate_resume_score(text)
 
         summary = ai_service.generate_summary(text)
 
         improvements = ai_service.generate_improvements(text)
 
-        resume_score = ai_service.generate_resume_score(text)
-
         career_paths = ai_service.generate_career_paths(text)
 
-        blind_spots = ai_service.generate_career_blindspots(text)
-
-        Skills_To_Develop = ai_service.generate_Skills_To_Develop(text)
-
-        action_plan = ai_service.generate_action_plan(text)
-
-
-        market_intelligence = ai_service.generate_market_intelligence(text)
+        skills_to_develop = (
+            ai_service.generate_skills_to_develop(text)
+        )
 
         recommended_certifications = (
             ai_service.generate_recommended_certifications(text)
         )
 
-    dashboard_tab, insights_tab, market_tab = st.tabs(
+    dashboard_tab, career_tab, cert_tab = st.tabs(
         [
             "📊 Dashboard",
             "🎯 Career Insights",
@@ -65,57 +58,51 @@ if uploaded_file:
         ]
     )
 
-    # ==================================================
+    # =========================
     # DASHBOARD
-    # ==================================================
+    # =========================
 
     with dashboard_tab:
 
-       
+        st.metric(
+            "Resume Score",
+            resume_score
+        )
 
-        col1, col2, col3 = st.columns(3)
+        st.subheader("📄 Summary")
 
-        with col1:
-            st.metric(
-                "Resume Score",
-                resume_score
-            )
+        st.markdown(summary)
 
-        
+        st.divider()
 
-    # ==================================================
+        st.subheader("✅ Resume Improvements")
+
+        st.markdown(improvements)
+
+    # =========================
     # CAREER INSIGHTS
-    # ==================================================
+    # =========================
 
-    with insights_tab:
+    with career_tab:
 
-        st.subheader("🧭 Recommended Career Paths")
+        st.subheader("🎯 Recommended Career Paths")
+
         st.markdown(career_paths)
 
         st.divider()
 
-        
+        st.subheader("📈 Skills To Develop")
 
-        st.subheader("📈 Skill To Develop")
-        st.markdown(Skills_To_Develop)
+        st.markdown(skills_to_develop)
 
-        st.divider()
+    # =========================
+    # CERTIFICATIONS
+    # =========================
 
-     
+    with cert_tab:
 
-    # ==================================================
-    # MARKET INTELLIGENCE
-    # ==================================================
+        st.subheader("🎓 Recommended Certifications")
 
-    with market_tab:
-
-        
-
-        st.subheader("⚠ Reccomended Certifications")
-
-        st.markdown(recommended_certifications)
-
-        st.divider()
-
-        
-        
+        st.markdown(
+            recommended_certifications
+        )

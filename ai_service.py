@@ -10,17 +10,15 @@ client = OpenAI(
 )
 
 SYSTEM_PROMPT = """
-You are an expert resume reviewer and career coach.
+You are an expert career strategist and career coach.
 
-Address the user directly using 'you' and 'your'.
+Focus on helping users identify:
+- Career paths
+- Skill development opportunities
+- Valuable certifications
+- Career progression opportunities
 
-Never refer to the candidate by name.
-
-Always write in second person.
-
-Provide specific, actionable recommendations.
-
-Avoid generic corporate buzzwords.
+Provide concise, actionable recommendations.
 """
 
 
@@ -167,47 +165,10 @@ Resume:
 
 
 
-def generate_career_blindspots(text):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": f"""
-                Analyze this resume.
-
-Return ONLY:
-
-Biggest Career Gaps
-
-Rules:
-- Maximum 5 bullet points
-- One line per bullet
-- No introductions
-- No explanations
-- No recommendations
-- No conclusions
-- Maximum 50 words total
-
-Resume:
-
-{text}
-                """
-            }
-        ],
-        max_tokens=800,
-        temperature=0.3
-    )
-
-    return response.choices[0].message.content
 
 
-def generate_Skills_To_Develop(text):
+
+def generate_skills_to_develop(text):
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -248,81 +209,8 @@ Resume:
     return response.choices[0].message.content
 
 
-def generate_action_plan(text):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": f"""
-                Based on this resume:
-
-                Create a practical 60-day action plan.
-
-                Provide:
-                1. Top 3 actions
-                2. Expected career impact
-
-                Keep it concise.
-
-                Resume:
-
-                {text}
-                """
-            }
-        ],
-        max_tokens=800,
-        temperature=0.3
-    )
-
-    return response.choices[0].message.content
 
 
-def generate_primary_role(text):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": f"""
-                Analyse this resume.
-
-                Return ONLY the most suitable job role.
-
-                Examples:
-
-                Software Engineer
-                Data Analyst
-                Technical Program Manager
-                Construction Project Manager
-                Automation Engineer
-
-                Return only the role.
-
-                No explanation.
-                No bullets.
-                No sentences.
-
-                Resume:
-
-                {text}
-                """
-            }
-        ],
-        max_tokens=20
-    )
-
-    return response.choices[0].message.content.strip()
 
 
 
@@ -338,19 +226,27 @@ def generate_recommended_certifications(text):
             {
                 "role": "user",
                 "content": f"""
-                Based on this resume, recommend the top 5
-                certifications that would most improve career
-                prospects.
+                Based on this resume, Return ONLY certification recommendations.
 
-                Return only certification names.
+Rules:
+- Maximum 3 certifications
+- Always provide the full certification name followed by the acronym in parentheses
+- One certification per line
+- No descriptions
+- No bullet explanations
+- No introductions or conclusions
 
-                One certification per line.
+Example:
 
-                No explanations.
+Certified Information Systems Security Professional (CISSP)
 
-                Resume:
+Certified Information Security Manager (CISM)
 
-                {text}
+CompTIA Cybersecurity Analyst (CySA+)
+
+Resume:
+
+{text}
                 """
             }
         ],
@@ -359,7 +255,8 @@ def generate_recommended_certifications(text):
 
     return response.choices[0].message.content
 
-def generate_market_intelligence(text):
+
+def generate_next_career_move(text):
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -371,36 +268,37 @@ def generate_market_intelligence(text):
             {
                 "role": "user",
                 "content": f"""
-                Analyse this resume and Generate a concise career market dashboard.
+Analyze this resume.
 
-Include only:
+Return ONLY:
 
-Salary Outlook
-Market Demand
-Growth Outlook
-High Value Skills To Add
+Next Best Move:
+[role]
 
-Formatting Rules:
+Actions:
+• action 1
+• action 2
+• action 3
 
-- No paragraphs.
-- No introductions.
-- No conclusions.
-- No # symbols.
-- No markdown headings.
-- Keep responses concise.
-- Use bullet points only for certifications and skills.
-- Maximum 100 words.
-- Do not use code formatting.
-- Do not use backticks.
-- Do not use HTML.
-- Do not use markdown code blocks.
+Rules:
+- Recommend only ONE role
+- Maximum 3 actions
+- No explanations
+- No introductions
+- No conclusions
+- No extra commentary
+- Maximum 30 words total
 
-                {text}
-                """
+Resume:
+
+{text}
+"""
             }
         ],
-        max_tokens=800
+        max_tokens=100,
+        temperature=0.3
     )
 
     return response.choices[0].message.content
+
 
