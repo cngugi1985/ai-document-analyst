@@ -112,9 +112,9 @@ if uploaded_file:
 
 {role}
 
-Target Compensation
+Annual Compensation
 
-{salary_data['min']} - {salary_data['max']}
+USD {salary_data['min']} to {salary_data['max']}
 """
 
             if i == 0:
