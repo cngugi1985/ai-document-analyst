@@ -96,14 +96,18 @@ if uploaded_file:
         ]
 
         for i, role in enumerate(roles):
-            st.info(f"{path_labels[i]}\n\n{role}")
+            if i == 0:
+                st.info(f"{path_labels[i]}\n\n{role}")
+            elif i == 1:
+                st.success(f"{path_labels[i]}\n\n{role}")
+            else:
+                st.warning(f"{path_labels[i]}\n\n{role}")
 
             if i < len(roles) - 1:
                 st.markdown(
                     "<h1 style='text-align:center;'>⬇️</h1>",
                     unsafe_allow_html=True
                 )
-
         st.divider()
 
         st.subheader("📈 Skills To Develop")
