@@ -85,7 +85,7 @@ if uploaded_file:
 
     with career_tab:
 
-        st.subheader("🎯 Recommended Career Paths")
+        st.subheader("🧭 Career Roadmap")
 
         roles = [role.strip() for role in career_paths.split("↓")]
 
