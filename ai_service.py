@@ -36,8 +36,7 @@ def generate_summary(text):
             {
                 "role": "user",
                 "content": f"""
-Analyse this resume and provide a professional summary.
-
+Analyse this resume. 
 Requirements:
 - Use 'you' and 'your'
 - Never use the candidate's name
@@ -104,16 +103,14 @@ def generate_resume_score(text):
                 "content": f"""
                 Review this resume.
 
-Return exactly this format:
+Return ONLY a resume score.
 
-Score: X/100
+Format:
+65/100
 
-Explanation:
-2-3 sentences explaining the score and criteria used to score it.
-
-Do not use markdown.
-Do not use headings.
-Do not use ### symbols.
+No explanation.
+No recommendations.
+No extra text.
 
                 Resume:
 
@@ -141,16 +138,23 @@ def generate_career_paths(text):
                 "content": f"""
                 Analyze this resume and provide:
 
-                1. Top 3 recommended career paths
-                2. Why the candidate is qualified
-                3. Missing skills
-                4. Estimated preparation time
+                Analyze this resume.
 
-                Keep the output concise and actionable.
+Return ONLY:
 
-                Resume:
+Top Career Matches
 
-                {text}
+Rules:
+- Maximum 3 career matches
+- One bullet per role
+- No explanations
+- No preparation time
+- No qualification analysis
+- No additional commentary
+
+Resume:
+
+{text}
                 """
             }
         ],
@@ -177,19 +181,22 @@ def generate_career_blindspots(text):
                 "content": f"""
                 Analyze this resume.
 
-                Identify:
+Return ONLY:
 
-                1. Hidden strengths
-                2. Undersold skills
-                3. Career opportunities the candidate
-                   may be overlooking
-                4. Why these opportunities are valuable
+Biggest Career Gaps
 
-                Be specific and actionable.
+Rules:
+- Maximum 5 bullet points
+- One line per bullet
+- No introductions
+- No explanations
+- No recommendations
+- No conclusions
+- Maximum 50 words total
 
-                Resume:
+Resume:
 
-                {text}
+{text}
                 """
             }
         ],
@@ -200,7 +207,7 @@ def generate_career_blindspots(text):
     return response.choices[0].message.content
 
 
-def generate_skill_gap_analysis(text):
+def generate_Skills_To_Develop(text):
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -212,16 +219,25 @@ def generate_skill_gap_analysis(text):
             {
                 "role": "user",
                 "content": f"""
-                Analyze this resume and identify:
+                Analyze this resume.
 
-                1. Current strengths
-                2. Skill gaps
-                3. Highest-impact skills to learn
-                4. Recommended learning order
+Return ONLY:
 
-                Resume:
+Top Skills To Add
 
-                {text}
+Rules:
+- Maximum 5 bullet points
+- One line per bullet
+- No current strengths
+- No explanations
+- No action steps
+- No introductions
+- No conclusions
+- Maximum 50 words total
+
+Resume:
+
+{text}
                 """
             }
         ],
@@ -309,35 +325,6 @@ def generate_primary_role(text):
     return response.choices[0].message.content.strip()
 
 
-def generate_existing_certifications(text):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": f"""
-                Extract all certifications, licenses,
-                professional credentials and professional
-                designations from this resume.
-
-                Return only a bulleted list.
-
-                Resume:
-
-                {text}
-                """
-            }
-        ],
-        max_tokens=300,
-        temperature=0.3
-    )
-
-    return response.choices[0].message.content
 
 def generate_recommended_certifications(text):
 
@@ -388,11 +375,9 @@ def generate_market_intelligence(text):
 
 Include only:
 
-Primary Role
 Salary Outlook
 Market Demand
 Growth Outlook
-Recommended Certifications
 High Value Skills To Add
 
 Formatting Rules:
@@ -405,6 +390,10 @@ Formatting Rules:
 - Keep responses concise.
 - Use bullet points only for certifications and skills.
 - Maximum 100 words.
+- Do not use code formatting.
+- Do not use backticks.
+- Do not use HTML.
+- Do not use markdown code blocks.
 
                 {text}
                 """
