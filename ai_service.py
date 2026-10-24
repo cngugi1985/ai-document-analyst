@@ -140,16 +140,21 @@ def generate_career_paths(text):
 
 Return ONLY:
 
-Top Career Matches
+Top 3 Career Matches
 
 Rules:
-- Maximum 3 career matches
-- One bullet per role
-- No explanations
-- No preparation time
-- No qualification analysis
-- No additional commentary
+- Maximum 3 roles
+- Show logical progression from nearest role to long-term role
+- Use this format:
 
+Role 1
+↓
+Role 2
+↓
+Role 3
+
+- No numbering
+- No explanations
 Resume:
 
 {text}
