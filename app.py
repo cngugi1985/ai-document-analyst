@@ -1,8 +1,9 @@
 import streamlit as st
 
 import ai_service
-from pdf_processor import extract_text_from_pdf
+import salary_service
 
+from pdf_processor import extract_text_from_pdf
 st.set_page_config(
     page_title="AI Career Navigator",
     layout="wide"
@@ -26,6 +27,11 @@ div[data-testid="metric-container"] {
 uploaded_file = st.file_uploader(
     "Upload Resume (PDF)",
     type=["pdf"]
+)
+
+location = st.text_input(
+    "📍 Target Location",
+    value="Manchester, NH"
 )
 
 if uploaded_file:
@@ -102,6 +108,16 @@ if uploaded_file:
                 st.success(f"{path_labels[i]}\n\n{role}")
             else:
                 st.warning(f"{path_labels[i]}\n\n{role}")
+
+            salary_data = salary_service.get_salary_range(
+                role,
+                location
+            )
+
+            st.caption(
+                f"💰 {salary_data['min']} - {salary_data['max']}"
+            )
+
 
             if i < len(roles) - 1:
                 st.markdown(
