@@ -1,6 +1,65 @@
+import salary_data_provider
+
+def get_role_level(role):
+
+    role = role.lower()
+
+    if "vice president" in role or "vp" in role:
+        return "Vice President"
+
+    elif "director" in role:
+        return "Director"
+
+    elif "manager" in role:
+        return "Manager"
+
+    elif "senior analyst" in role:
+        return "Manager"
+
+    elif "analyst" in role:
+        return "Analyst"
+
+    return None
+
+def get_market_salary(role, location):
+
+    role_level = get_role_level(role)
+
+    if role_level is None:
+        return None
+
+    sources = get_salary_sources(
+        role,
+        location
+    )
+
+    salary_com = sources["source_1"]
+
+    if salary_com["status"] == "Connected":
+
+        return {
+            "min": salary_com["salary_min"],
+            "max": salary_com["salary_max"]
+        }
+
+    return None
+
 def get_salary_range(role, location):
 
     role = role.lower()
+
+    market_salary = get_market_salary(
+        role,
+        location
+    )
+
+    if market_salary:
+        return {
+            "min": f"{market_salary['min']:,}",
+            "max": f"{market_salary['max']:,}",
+            "source": "Salary.com Dataset",
+            "source_2": "ZipRecruiter Dataset"
+        }
 
     multiplier = get_location_multiplier(location)
 
@@ -135,9 +194,30 @@ def get_market_advantage(location):
 
 def get_salary_sources(role, location):
 
+    salary_com = (
+        salary_data_provider.get_salary_com_data(
+            role,
+            location
+        )
+    )
+
+    ziprecruiter = (
+        salary_data_provider.get_ziprecruiter_data(
+            role,
+            location
+        )
+    )
+
     return {
-        "source_1": "Salary.com",
-        "source_2": "ZipRecruiter"
+        "source_1": salary_com,
+        "source_2": ziprecruiter
+    }
+
+def get_salary_confidence():
+
+    return {
+        "level": "Low",
+        "status": "Prototype salary model"
     }
 
 
