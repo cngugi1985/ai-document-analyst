@@ -3,12 +3,17 @@ from market_data import SALARY_DATA
 
 
 def get_salary_com_data(role, location):
-    role_lower = role.lower()
 
-    if "senior analyst" in role_lower:
-        data = SALARY_DATA["Manager"].get(location)
-    elif "analyst" in role_lower:
+    role = role.lower()
+
+    if "senior" in role and "analyst" in role:
+
+        data = SALARY_DATA["Senior Analyst"].get(location)
+
+    elif "analyst" in role:
+
         data = SALARY_DATA["Analyst"].get(location)
+
     else:
         data = None
 
@@ -26,7 +31,7 @@ def get_salary_com_data(role, location):
         "salary_min": None,
         "salary_max": None
     }
-
+    
 
 def get_ziprecruiter_data(role, location):
     salary_info = SALARY_DATA.get(role, {}).get(location, {"min": None, "max": None})

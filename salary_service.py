@@ -14,7 +14,7 @@ def get_role_level(role):
         return "Manager"
 
     elif "senior analyst" in role:
-        return "Manager"
+        return "Senior Analyst"
 
     elif "analyst" in role:
         return "Analyst"
@@ -57,8 +57,8 @@ def get_salary_range(role, location):
         return {
             "min": f"{market_salary['min']:,}",
             "max": f"{market_salary['max']:,}",
-            "source": "Salary.com Dataset",
-            "source_2": "ZipRecruiter Dataset"
+            "source": "Internal Market Dataset",
+            "source_2": "Compensation Model"
         }
 
     multiplier = get_location_multiplier(location)
@@ -111,8 +111,8 @@ def get_salary_range(role, location):
     return {
         "min": f"{min_salary:,}",
         "max": f"{max_salary:,}",
-        "source": "Prototype",
-        "source_2": "Coming Soon"
+        "source": "Internal Market Dataset",
+        "source_2": "Compensation Model"
     }
 
 def calculate_increase(current_salary, next_salary):

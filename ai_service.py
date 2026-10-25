@@ -144,8 +144,11 @@ Top 3 Career Matches
 
 Rules:
 - Maximum 3 roles
-- Show logical progression from nearest role to long-term role
-- Use this format:
+- Show a realistic promotion path
+- Each role should represent a meaningful increase in responsibility or compensation
+- Avoid lateral moves at the same career level
+- Role 2 should typically be a promotion from Role 1
+- Role 3 should represent a senior leadership or specialist progression from Role 2
 
 Role 1
 ↓
