@@ -29,9 +29,20 @@ uploaded_file = st.file_uploader(
     type=["pdf"]
 )
 
-location = st.text_input(
+location = st.selectbox(
     "📍 Target Location",
-    value="Manchester, NH"
+    [
+        "Manchester, NH",
+        "Boston, MA",
+        "New York, NY",
+        "Austin, TX",
+        "Seattle, WA",
+        "Chicago, IL",
+        "San Francisco, CA",
+        "Orlando, FL",
+        "Nashville, TN",
+        "Denver, CO"
+    ]
 )
 
 if uploaded_file:
@@ -114,6 +125,8 @@ if uploaded_file:
 
             Annual Compensation
 
+            Based on {location}
+
             USD {salary_data['min']} to {salary_data['max']}
 
             Salary Sources
@@ -164,6 +177,30 @@ USD {increase['min']} to {increase['max']}
         st.subheader("📈 Skills To Develop")
 
         st.markdown(skills_to_develop)
+
+        skills_list = [
+            skill.replace("•", "").strip()
+            for skill in skills_to_develop.split("\n")
+            if skill.strip()
+        ]
+
+        roi = salary_service.get_skill_roi(skills_list)
+
+        st.divider()
+
+        st.subheader("💰 Highest ROI Skill")
+
+        st.success(
+            f"""
+       {roi['skill']}
+
+       Potential Salary Impact
+
+       +USD {roi['impact']}
+       """
+        )
+
+         
 
     # =========================
     # CERTIFICATIONS
