@@ -8,6 +8,22 @@ SALARY_DATA = {
         "San Francisco, CA": {"min": 105000, "max": 150000}
     },
 
+    "Engineer": {
+        "Manchester, NH": {"min": 85000, "max": 125000},
+        "Boston, MA": {"min": 100000, "max": 145000},
+        "New York, NY": {"min": 110000, "max": 160000},
+        "Seattle, WA": {"min": 120000, "max": 175000},
+        "San Francisco, CA": {"min": 130000, "max": 190000}
+   },
+
+   "Senior Engineer": {
+        "Manchester, NH": {"min": 105000, "max": 145000},
+        "Boston, MA": {"min": 120000, "max": 170000},
+        "New York, NY": {"min": 135000, "max": 185000},
+        "Seattle, WA": {"min": 145000, "max": 200000},
+        "San Francisco, CA": {"min": 160000, "max": 220000}
+   },
+
     "Senior Analyst": {
             "Manchester, NH": {"min": 90000, "max": 130000},
         "Boston, MA": {"min": 105000, "max": 150000},
@@ -23,6 +39,14 @@ SALARY_DATA = {
         "Seattle, WA": {"min": 140000, "max": 195000},
         "San Francisco, CA": {"min": 155000, "max": 220000}
     },
+
+    "Senior Manager": {
+        "Manchester, NH": {"min": 135000, "max": 190000},
+        "Boston, MA": {"min": 155000, "max": 215000},
+        "New York, NY": {"min": 170000, "max": 230000},
+        "Seattle, WA": {"min": 165000, "max": 225000},
+        "San Francisco, CA": {"min": 185000, "max": 250000}
+  },
 
     "Director": {
         "Manchester, NH": {"min": 140000, "max": 200000},
