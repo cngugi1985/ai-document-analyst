@@ -119,7 +119,7 @@ if uploaded_file:
             Salary Sources
 
             • {salary_data['source']}
-            
+
             • {salary_data['source_2']}
             """
 
@@ -131,6 +131,27 @@ if uploaded_file:
 
             else:
                 st.warning(card_text)
+
+            if i < len(roles) - 1:
+                next_role = roles[i + 1]
+
+                next_salary = salary_service.get_salary_range(
+                    next_role,
+                    location
+                )
+
+                increase = salary_service.calculate_increase(
+                    salary_data,
+                    next_salary
+                )
+
+                st.markdown(
+                    f"""
+**Potential Increase**
+
+USD {increase['min']} to {increase['max']}
+"""
+                )
 
             if i < len(roles) - 1:
                 st.markdown(
