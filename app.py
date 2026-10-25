@@ -101,11 +101,9 @@ if uploaded_file:
     # =========================
 
     with career_tab:
-
         st.subheader("🧭 Career Roadmap")
 
         roles = [role.strip() for role in career_paths.split("↓")]
-
         path_labels = [
             "📍 Current Role",
             "🚀 Next Role",
@@ -113,69 +111,50 @@ if uploaded_file:
         ]
 
         for i, role in enumerate(roles):
-            salary_data = salary_service.get_salary_range(
-                role,
-                location
-            )
-
+            salary_data = salary_service.get_salary_range(role, location)
             card_text = f"""
-            {path_labels[i]}
+{path_labels[i]}
 
-            {role}
+{role}
 
-            Annual Compensation
+Annual Compensation
 
-            Based on {location}
+Based on {location}
 
-            USD {salary_data['min']} to {salary_data['max']}
+USD {salary_data['min']} to {salary_data['max']}
 
-            Salary Sources
+Salary Sources
 
-            • {salary_data['source']}
-
-            • {salary_data['source_2']}
-            """
+• {salary_data['source']}
+• {salary_data['source_2']}
+"""
 
             if i == 0:
                 st.info(card_text)
-
             elif i == 1:
                 st.success(card_text)
-
             else:
                 st.warning(card_text)
 
             if i < len(roles) - 1:
-                next_role = roles[i + 1]
-
                 next_salary = salary_service.get_salary_range(
-                    next_role,
-                    location
+                    roles[i + 1], location
                 )
-
                 increase = salary_service.calculate_increase(
-                    salary_data,
-                    next_salary
+                    salary_data, next_salary
                 )
-
                 st.markdown(
-                    f"""
-**Potential Increase**
+                    f"""**Potential Increase**
 
-USD {increase['min']} to {increase['max']}
-"""
+USD {increase['min']} to {increase['max']}"""
                 )
-
-            if i < len(roles) - 1:
                 st.markdown(
                     "<h1 style='text-align:center;'>⬇️</h1>",
                     unsafe_allow_html=True
                 )
 
         st.divider()
-
         st.subheader("📈 Skills To Develop")
-
         st.markdown(skills_to_develop)
 
         skills_list = [
@@ -183,31 +162,43 @@ USD {increase['min']} to {increase['max']}
             for skill in skills_to_develop.split("\n")
             if skill.strip()
         ]
-
         roi = salary_service.get_skill_roi(skills_list)
 
         st.divider()
-
         st.subheader("💰 Highest ROI Skill")
+        st.success(
+            f"""{roi['skill']}
+
+Potential Salary Impact
+
++USD {roi['impact']}"""
+        )
+
+        st.divider()
+        location_insight = salary_service.get_location_insight(location)
+
+        st.subheader("📍 Location Intelligence")
 
         st.success(
             f"""
-       {roi['skill']}
+Selected Market
 
-       Potential Salary Impact
+{location_insight["market"]}
 
-       +USD {roi['impact']}
-       """
+Estimated Market Premium
+
++{location_insight["percentage"]}%
+
+Why It Matters
+
+Higher earning potential compared with baseline markets.
+"""
         )
-
-         
 
     # =========================
     # CERTIFICATIONS
     # =========================
 
     with cert_tab:
-
         st.subheader("🎓 Recommended Certifications")
-
         st.markdown(recommended_certifications)

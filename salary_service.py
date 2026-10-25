@@ -69,6 +69,20 @@ def calculate_increase(current_salary, next_salary):
         "max": f"{next_max - current_max:,}"
     }
 
+def get_skill_roi(skills):
+
+    if not skills:
+        return {
+            "skill": "Coming Soon",
+            "impact": "0"
+        }
+
+    return {
+        "skill": skills[0],
+        "impact": "15,000 to 35,000"
+    }
+   
+
 def get_location_multiplier(location):
 
     location = location.lower()
@@ -90,6 +104,18 @@ def get_location_multiplier(location):
 
     else:
         return 1.00
+
+def get_location_insight(location):
+
+    multiplier = get_location_multiplier(location)
+
+    percentage = int((multiplier - 1) * 100)
+
+    return {
+        "market": location,
+        "multiplier": multiplier,
+        "percentage": percentage
+    }       
 
 
 
