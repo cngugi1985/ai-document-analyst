@@ -115,7 +115,30 @@ def get_location_insight(location):
         "market": location,
         "multiplier": multiplier,
         "percentage": percentage
-    }       
+    }     
+
+def get_market_advantage(location):
+
+    baseline_multiplier = 1.00
+
+    selected_multiplier = get_location_multiplier(
+        location
+    )
+
+    percentage = (
+        selected_multiplier - baseline_multiplier
+    )
+
+    return {
+        "advantage": int(percentage * 100)
+    }  
+
+def get_salary_sources(role, location):
+
+    return {
+        "source_1": "Salary.com",
+        "source_2": "ZipRecruiter"
+    }
 
 
 

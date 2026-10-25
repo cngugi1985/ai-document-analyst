@@ -176,25 +176,25 @@ Potential Salary Impact
 
         st.divider()
         location_insight = salary_service.get_location_insight(location)
+        market_advantage = salary_service.get_market_advantage(location)
 
         st.subheader("📍 Location Intelligence")
 
         st.success(
-            f"""
+    f"""
 Selected Market
 
-{location_insight["market"]}
+{location_insight['market']}
 
 Estimated Market Premium
 
-+{location_insight["percentage"]}%
++{location_insight['percentage']}%
 
 Why It Matters
 
 Higher earning potential compared with baseline markets.
 """
-        )
-
+)
     # =========================
     # CERTIFICATIONS
     # =========================
