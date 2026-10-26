@@ -20,6 +20,32 @@ Focus on helping users identify:
 
 Provide concise, actionable recommendations.
 """
+def extract_current_role(text):
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "user",
+                "content": f"""Analyze the resume and identify the candidate's most recent or current job title.
+
+Rules:
+- Return only one title.
+- Use the actual title from the resume.
+- Do not rewrite the title.
+- Do not infer a higher title.
+- Do not suggest an alternative title.
+- Return only the exact role title.
+
+Resume:
+{text}
+"""
+            }
+        ],
+        max_tokens=100,
+        temperature=0
+    )
+
+    return response.choices[0].message.content
 
 
 def generate_summary(text):
@@ -138,17 +164,16 @@ def generate_career_paths(text):
 
                 Analyze this resume.
 
-Return ONLY:
-
-Top 3 Career Matches
-
 Rules:
-- Maximum 3 roles
-- Show a realistic promotion path
-- Each role should represent a meaningful increase in responsibility or compensation
-- Avoid lateral moves at the same career level
-- Role 2 should typically be a promotion from Role 1
-- Role 3 should represent a senior leadership or specialist progression from Role 2
+
+- Role 1 MUST represent the candidate's current role as extracted from the uploaded document.
+- Do not infer a higher role than current role explicitly from the resume.
+- Role 2 should be a realistic promotion from Role 1.
+- Role 3 should be a realistic long-term progression from Role 2.
+- Avoid lateral moves.
+- Avoid alternative career paths.
+
+Return only:
 
 Role 1
 ↓
