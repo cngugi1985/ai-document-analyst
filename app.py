@@ -57,6 +57,10 @@ if uploaded_file:
 
         improvements = ai_service.generate_improvements(text)
 
+        current_role = ai_service.extract_current_role(
+            text
+        )
+
         career_paths = ai_service.generate_career_paths(text)
 
         skills_to_develop = (
@@ -85,6 +89,14 @@ if uploaded_file:
             "Resume Score",
             resume_score
         )
+
+        st.subheader("🎯 Detected Current Role")
+
+        st.success(current_role)
+
+        st.caption(
+            "Extracted directly from the resume before generating career recommendations."
+    )
 
         st.subheader("📄 Summary")
 

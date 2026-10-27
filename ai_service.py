@@ -220,7 +220,7 @@ Return ONLY:
 Top Skills To Add
 
 Rules:
-- Maximum 5 bullet points
+- Maximum 3 bullet points
 - One line per bullet
 - No current strengths
 - No explanations
