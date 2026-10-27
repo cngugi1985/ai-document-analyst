@@ -10,6 +10,9 @@ def get_role_level(role):
     elif "director" in role:
         return "Director"
 
+    elif "senior" in role and "manager" in role:
+        return "Senior Manager"
+
     elif "manager" in role:
         return "Manager"
 
