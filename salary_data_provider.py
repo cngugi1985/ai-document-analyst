@@ -4,18 +4,7 @@ from market_data import SALARY_DATA
 
 def get_salary_com_data(role, location):
 
-    role = role.lower()
-
-    if "senior" in role and "manager" in role:
-        data = SALARY_DATA["Senior Manager"].get(location)
-    elif "manager" in role:
-        data = SALARY_DATA["Manager"].get(location)
-    elif "senior" in role and "analyst" in role:
-        data = SALARY_DATA["Senior Analyst"].get(location)
-    elif "analyst" in role:
-        data = SALARY_DATA["Analyst"].get(location)
-    else:
-        data = None
+    data = SALARY_DATA.get(role, {}).get(location)
 
     if data:
         return {

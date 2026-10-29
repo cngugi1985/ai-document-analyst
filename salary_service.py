@@ -1,4 +1,5 @@
 import salary_data_provider
+import ai_service
 
 def get_role_level(role):
 
@@ -26,14 +27,14 @@ def get_role_level(role):
 
 def get_market_salary(role, location):
 
-    role_level = get_role_level(role)
+    role_level = ai_service.classify_role_level(role)
 
     if role_level is None:
         return None
 
     sources = get_salary_sources(
-        role,
-        location
+    role_level,
+    location
     )
 
     salary_com = sources["source_1"]
