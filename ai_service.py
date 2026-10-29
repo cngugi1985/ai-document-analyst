@@ -47,6 +47,45 @@ Resume:
 
     return response.choices[0].message.content
 
+def classify_role_level(role):
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "user",
+                "content": f"""
+Classify this job title into ONE salary band.
+
+Valid salary bands:
+
+Analyst
+Senior Analyst
+Engineer
+Senior Engineer
+Manager
+Senior Manager
+Director
+Vice President
+
+Rules:
+- Return only one salary band.
+- No explanation.
+- No punctuation.
+- No extra text.
+
+Job Title:
+
+{role}
+"""
+            }
+        ],
+        max_tokens=20,
+        temperature=0
+    )
+
+    return response.choices[0].message.content.strip()
+
 
 def generate_summary(text):
 
@@ -335,5 +374,14 @@ Resume:
     )
 
     return response.choices[0].message.content
+
+if __name__ == "__main__":
+
+    print(classify_role_level("Software Engineer"))
+    print(classify_role_level("Senior Software Engineer"))
+    print(classify_role_level("Cloud Solutions Architect"))
+    print(classify_role_level("Human Resources Business Partner"))
+    print(classify_role_level("Principal Data Scientist"))
+    print(classify_role_level("VP Sales"))
 
 
