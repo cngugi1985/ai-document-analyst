@@ -375,18 +375,5 @@ Resume:
 
     return response.choices[0].message.content
 
-if __name__ == "__main__":
-
-    print(classify_role_level("Software Engineer"))
-    print(classify_role_level("Senior Software Engineer"))
-    print(classify_role_level("Cloud Solutions Architect"))
-    print(classify_role_level("Human Resources Business Partner"))
-    print(classify_role_level("Principal Data Scientist"))
-    print(classify_role_level("VP Sales"))
-    print(classify_role_level("Clinical Nurse Specialist"))
-    print(classify_role_level("Nurse Manager"))
-    print(classify_role_level("Registered Nurse"))
-    print(classify_role_level("Senior Sales Manager"))
-    print(classify_role_level("Technical Program Manager")) 
 
 
