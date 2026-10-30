@@ -21,12 +21,3 @@ def get_salary_com_data(role, location):
         "salary_max": None
     }
 
-def get_ziprecruiter_data(role, location):
-    salary_info = SALARY_DATA.get(role, {}).get(location, {"min": None, "max": None})
-
-    return {
-        "source": "ZipRecruiter",
-        "status": "Not Connected",
-        "salary_min": salary_info["min"],
-        "salary_max": salary_info["max"]
-    }

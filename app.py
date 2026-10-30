@@ -2,6 +2,8 @@ import streamlit as st
 
 import ai_service
 import salary_service
+from locations import LOCATIONS
+
 
 from pdf_processor import extract_text_from_pdf
 st.set_page_config(
@@ -31,20 +33,8 @@ uploaded_file = st.file_uploader(
 
 location = st.selectbox(
     "📍 Target Location",
-    [
-        "Manchester, NH",
-        "Boston, MA",
-        "New York, NY",
-        "Austin, TX",
-        "Seattle, WA",
-        "Chicago, IL",
-        "San Francisco, CA",
-        "Orlando, FL",
-        "Nashville, TN",
-        "Denver, CO"
-    ]
+    LOCATIONS
 )
-
 if uploaded_file:
 
     text, page_count = extract_text_from_pdf(uploaded_file)

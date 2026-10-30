@@ -205,16 +205,8 @@ def get_salary_sources(role, location):
         )
     )
 
-    ziprecruiter = (
-        salary_data_provider.get_ziprecruiter_data(
-            role,
-            location
-        )
-    )
-
     return {
-        "source_1": salary_com,
-        "source_2": ziprecruiter
+        "source_1": salary_com
     }
 
 def get_salary_confidence():
