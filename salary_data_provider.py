@@ -1,22 +1,35 @@
 
 from market_data import SALARY_DATA
+from market_data import BASE_SALARY
+from market_adjustments import MARKET_ADJUSTMENTS
+
 
 
 def get_salary_com_data(role, location):
 
-    data = SALARY_DATA.get(role, {}).get(location)
+    base_salary = BASE_SALARY.get(role)
+    multiplier = MARKET_ADJUSTMENTS.get(location)
 
-    if data:
+    if base_salary and multiplier:
+
+        salary_min = round(
+            base_salary["min"] * multiplier
+        )
+
+        salary_max = round(
+            base_salary["max"] * multiplier
+        )
+
         return {
-            "source": "Salary.com",
-            "status": "Connected",
-            "salary_min": data["min"],
-            "salary_max": data["max"]
+            "source": "Career Intelligence Dataset",
+            "status": "Available",
+            "salary_min": salary_min,
+            "salary_max": salary_max
         }
 
     return {
-        "source": "Salary.com",
-        "status": "Not Connected",
+        "source": "Career Intelligence Dataset",
+        "status": "Unavailable",
         "salary_min": None,
         "salary_max": None
     }

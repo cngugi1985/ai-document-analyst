@@ -1,5 +1,7 @@
 import salary_data_provider
 import ai_service
+from market_data import BASE_SALARY
+from market_adjustments import MARKET_ADJUSTMENTS
 
 def get_role_level(role):
 
@@ -39,7 +41,7 @@ def get_market_salary(role, location):
 
     salary_com = sources["source_1"]
 
-    if salary_com["status"] == "Connected":
+    if salary_com["status"] == "Available":
 
         return {
             "min": salary_com["salary_min"],
