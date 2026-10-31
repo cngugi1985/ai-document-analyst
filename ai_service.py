@@ -187,57 +187,6 @@ No extra text.
     return response.choices[0].message.content
 
 
-def generate_career_paths(text):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": f"""
-                Analyze this resume and provide:
-
-                Analyze this resume.
-
-Rules:
-
-- Role 1 MUST represent the candidate's current role as extracted from the uploaded document.
-- Do not infer a higher role than current role explicitly from the resume.
-- Role 2 should be a realistic promotion from Role 1.
-- Role 3 should be a realistic long-term progression from Role 2.
-- Avoid lateral moves.
-- Avoid alternative career paths.
-
-Return only:
-
-Role 1
-↓
-Role 2
-↓
-Role 3
-
-- No numbering
-- No explanations
-Resume:
-
-{text}
-                """
-            }
-        ],
-        max_tokens=800,
-        temperature=0.3
-    )
-
-    return response.choices[0].message.content
-
-
-
-
-
 
 
 def generate_skills_to_develop(text):

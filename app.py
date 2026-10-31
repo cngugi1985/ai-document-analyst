@@ -47,12 +47,8 @@ if uploaded_file:
 
         improvements = ai_service.generate_improvements(text)
 
-        current_role = ai_service.extract_current_role(
-            text
-        )
-
-        career_paths = ai_service.generate_career_paths(text)
-
+       
+        
         skills_to_develop = (
             ai_service.generate_skills_to_develop(text)
         )
@@ -80,10 +76,8 @@ if uploaded_file:
             resume_score
         )
 
-        st.subheader("🎯 Detected Current Role")
-
-        st.success(current_role)
-
+      
+    
         st.caption(
             "Extracted directly from the resume before generating career recommendations."
     )
@@ -98,105 +92,6 @@ if uploaded_file:
 
         st.markdown(improvements)
 
-    # =========================
-    # CAREER INSIGHTS
-    # =========================
-
-    with career_tab:
-        st.subheader("🧭 Career Roadmap")
-
-        roles = [role.strip() for role in career_paths.split("↓")]
-        path_labels = [
-            "📍 Current Role",
-            "🚀 Next Role",
-            "🏆 Long-Term Goal"
-        ]
-
-        for i, role in enumerate(roles):
-            salary_data = salary_service.get_salary_range(role, location)
-            card_text = f"""
-{path_labels[i]}
-
-{role}
-
-Annual Compensation
-
-Based on {location}
-
-USD {salary_data['min']} to {salary_data['max']}
-
-Salary Sources
-
-• {salary_data['source']}
-• {salary_data['source_2']}
-"""
-
-            if i == 0:
-                st.info(card_text)
-            elif i == 1:
-                st.success(card_text)
-            else:
-                st.warning(card_text)
-
-            if i < len(roles) - 1:
-                next_salary = salary_service.get_salary_range(
-                    roles[i + 1], location
-                )
-                increase = salary_service.calculate_increase(
-                    salary_data, next_salary
-                )
-                st.markdown(
-                    f"""**Potential Increase**
-
-USD {increase['min']} to {increase['max']}"""
-                )
-                st.markdown(
-                    "<h1 style='text-align:center;'>⬇️</h1>",
-                    unsafe_allow_html=True
-                )
-
-        st.divider()
-        st.subheader("📈 Skills To Develop")
-        st.markdown(skills_to_develop)
-
-        skills_list = [
-            skill.replace("•", "").strip()
-            for skill in skills_to_develop.split("\n")
-            if skill.strip()
-        ]
-        roi = salary_service.get_skill_roi(skills_list)
-
-        st.divider()
-        st.subheader("💰 Highest ROI Skill")
-        st.success(
-            f"""{roi['skill']}
-
-Potential Salary Impact
-
-+USD {roi['impact']}"""
-        )
-
-        st.divider()
-        location_insight = salary_service.get_location_insight(location)
-        market_advantage = salary_service.get_market_advantage(location)
-
-        st.subheader("📍 Location Intelligence")
-
-        st.success(
-    f"""
-Selected Market
-
-{location_insight['market']}
-
-Estimated Market Premium
-
-+{location_insight['percentage']}%
-
-Why It Matters
-
-Higher earning potential compared with baseline markets.
-"""
-)
     # =========================
     # CERTIFICATIONS
     # =========================

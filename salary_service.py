@@ -1,35 +1,15 @@
-import salary_data_provider
+
 import ai_service
 from market_data import BASE_SALARY
 from market_adjustments import MARKET_ADJUSTMENTS
 
-def get_role_level(role):
-
-    role = role.lower()
-
-    if "vice president" in role or "vp" in role:
-        return "Vice President"
-
-    elif "director" in role:
-        return "Director"
-
-    elif "senior" in role and "manager" in role:
-        return "Senior Manager"
-
-    elif "manager" in role:
-        return "Manager"
-
-    elif "senior analyst" in role:
-        return "Senior Analyst"
-
-    elif "analyst" in role:
-        return "Analyst"
-
-    return None
 
 def get_market_salary(role, location):
 
     role_level = ai_service.classify_role_level(role)
+
+    print(f"{role} -> {role_level}")
+
 
     if role_level is None:
         return None
@@ -67,72 +47,8 @@ def get_salary_range(role, location):
             "source_2": "Compensation Model"
         }
 
-    multiplier = get_location_multiplier(location)
 
-    if "chief" in role or "ciso" in role:
 
-        min_salary = int(220000 * multiplier)
-        max_salary = int(350000 * multiplier)
-
-    elif "vice president" in role or "vp" in role:
-
-        min_salary = int(180000 * multiplier)
-        max_salary = int(280000 * multiplier)
-
-    elif "director" in role:
-
-        min_salary = int(140000 * multiplier)
-        max_salary = int(200000 * multiplier)
-
-    elif "manager" in role:
-
-        min_salary = int(110000 * multiplier)
-        max_salary = int(160000 * multiplier)
-
-    elif "architect" in role:
-
-        min_salary = int(125000 * multiplier)
-        max_salary = int(180000 * multiplier)
-
-    elif "engineer" in role:
-
-        min_salary = int(95000 * multiplier)
-        max_salary = int(140000 * multiplier)
-
-    elif "analyst" in role:
-
-        min_salary = int(75000 * multiplier)
-        max_salary = int(110000 * multiplier)
-
-    elif "supervisor" in role:
-
-        min_salary = int(85000 * multiplier)
-        max_salary = int(125000 * multiplier)
-
-    else:
-
-        min_salary = int(80000 * multiplier)
-        max_salary = int(120000 * multiplier)
-
-    return {
-        "min": f"{min_salary:,}",
-        "max": f"{max_salary:,}",
-        "source": "Internal Market Dataset",
-        "source_2": "Compensation Model"
-    }
-
-def calculate_increase(current_salary, next_salary):
-
-    current_min = int(current_salary["min"].replace(",", ""))
-    current_max = int(current_salary["max"].replace(",", ""))
-
-    next_min = int(next_salary["min"].replace(",", ""))
-    next_max = int(next_salary["max"].replace(",", ""))
-
-    return {
-        "min": f"{next_min - current_min:,}",
-        "max": f"{next_max - current_max:,}"
-    }
 
 def get_skill_roi(skills):
 
@@ -147,40 +63,6 @@ def get_skill_roi(skills):
         "impact": "15,000 to 35,000"
     }
    
-
-def get_location_multiplier(location):
-
-    location = location.lower()
-
-    if "san francisco" in location:
-        return 1.40
-
-    elif "seattle" in location:
-        return 1.30
-
-    elif "boston" in location:
-        return 1.20
-
-    elif "austin" in location:
-        return 1.15
-
-    elif "manchester" in location:
-        return 1.00
-
-    else:
-        return 1.00
-
-def get_location_insight(location):
-
-    multiplier = get_location_multiplier(location)
-
-    percentage = int((multiplier - 1) * 100)
-
-    return {
-        "market": location,
-        "multiplier": multiplier,
-        "percentage": percentage
-    }     
 
 def get_market_advantage(location):
 
@@ -198,25 +80,8 @@ def get_market_advantage(location):
         "advantage": int(percentage * 100)
     }  
 
-def get_salary_sources(role, location):
 
-    salary_com = (
-        salary_data_provider.get_salary_com_data(
-            role,
-            location
-        )
-    )
 
-    return {
-        "source_1": salary_com
-    }
-
-def get_salary_confidence():
-
-    return {
-        "level": "Low",
-        "status": "Prototype salary model"
-    }
 
 
 
