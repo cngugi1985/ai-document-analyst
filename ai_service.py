@@ -138,6 +138,9 @@ def generate_improvements(text):
                 - 3 improvement suggestions
                 - Missing keywords
                 - Ways to make achievements stronger
+                - Use 'you' and 'your'
+                - Never use the candidate's name
+                - Never refer to the user in third person
 
                 Resume:
 
@@ -250,22 +253,24 @@ def generate_recommended_certifications(text):
                 Based on this resume, Return ONLY certification recommendations.
 
 Rules:
-- Maximum 3 certifications
-- Certifications only
-- Do not recommend job titles
-- Do not recommend career paths
-- Do not include arrows
-- Do not include progression paths
-- One certification per line
-- Stop after the final certification
+- Recommend exactly 2 certifications.
+- Choose the 2 certifications with the highest practical value for the candidate's current role and experience.
+- Certifications only.
+- Do not recommend job titles.
+- Do not recommend career paths.
+- Do not include explanations.
+- Do not include numbering.
+- Do not include bullets.
+- One certification per line.
+Press Enter after each certification.
+Return exactly two separate lines.
+- Return exactly 2 lines and nothing else.
 
 Example:
 
 Certified Information Systems Security Professional (CISSP)
 
 Certified Information Security Manager (CISM)
-
-CompTIA Cybersecurity Analyst (CySA+)
 
 Resume:
 

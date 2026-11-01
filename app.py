@@ -2,7 +2,6 @@ import streamlit as st
 
 import ai_service
 import salary_service
-from locations import LOCATIONS
 
 
 from pdf_processor import extract_text_from_pdf
@@ -31,40 +30,35 @@ uploaded_file = st.file_uploader(
     type=["pdf"]
 )
 
-location = st.selectbox(
-    "📍 Target Location",
-    LOCATIONS
-)
-if uploaded_file:
 
+if uploaded_file:
     text, page_count = extract_text_from_pdf(uploaded_file)
 
     with st.spinner("Analyzing resume..."):
-
         resume_score = ai_service.generate_resume_score(text)
-
         summary = ai_service.generate_summary(text)
-
         improvements = ai_service.generate_improvements(text)
-
-       
-        
         skills_to_develop = (
             ai_service.generate_skills_to_develop(text)
         )
-
         recommended_certifications = (
             ai_service.generate_recommended_certifications(text)
         )
 
-    dashboard_tab, career_tab, cert_tab = st.tabs(
+    
+    certifications = [
+    cert.strip()
+    for cert in recommended_certifications.splitlines()
+    if cert.strip()
+]
+    recommended_certifications = "\n".join(certifications[:2])
+
+    dashboard_tab, cert_tab = st.tabs(
         [
             "📊 Dashboard",
-            "🎯 Career Insights",
             "🎓 Certifications"
         ]
     )
-
     # =========================
     # DASHBOARD
     # =========================
@@ -76,11 +70,9 @@ if uploaded_file:
             resume_score
         )
 
-      
-    
         st.caption(
             "Extracted directly from the resume before generating career recommendations."
-    )
+        )
 
         st.subheader("📄 Summary")
 
@@ -97,5 +89,14 @@ if uploaded_file:
     # =========================
 
     with cert_tab:
+
         st.subheader("🎓 Recommended Certifications")
-        st.markdown(recommended_certifications)
+
+        certifications = [
+            cert.strip()
+            for cert in recommended_certifications.splitlines()
+            if cert.strip()
+        ]
+
+        for cert in certifications[:2]:
+            st.markdown(f"• {cert}")
