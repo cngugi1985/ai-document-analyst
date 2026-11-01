@@ -47,44 +47,6 @@ Resume:
 
     return response.choices[0].message.content
 
-def classify_role_level(role):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "user",
-                "content": f"""
-Classify this job title into ONE salary band.
-
-Valid salary bands:
-
-Analyst
-Senior Analyst
-Engineer
-Senior Engineer
-Manager
-Senior Manager
-Director
-Vice President
-
-Rules:
-- Return only one salary band.
-- No explanation.
-- No punctuation.
-- No extra text.
-
-Job Title:
-
-{role}
-"""
-            }
-        ],
-        max_tokens=20,
-        temperature=0
-    )
-
-    return response.choices[0].message.content.strip()
 
 
 def generate_summary(text):
@@ -172,7 +134,7 @@ def generate_resume_score(text):
 Return ONLY a resume score.
 
 Format:
-65/100
+6/10
 
 No explanation.
 No recommendations.

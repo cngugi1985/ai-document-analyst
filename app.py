@@ -1,17 +1,16 @@
 import streamlit as st
 
 import ai_service
-import salary_service
+
 
 
 from pdf_processor import extract_text_from_pdf
 st.set_page_config(
-    page_title="AI Career Navigator",
+    page_title="CC AI",
     layout="wide"
 )
 
-st.title("🚀 AI Career Navigator")
-
+st.title("🚀 CC AI")
 st.markdown("""
 <style>
 
@@ -70,9 +69,7 @@ if uploaded_file:
             resume_score
         )
 
-        st.caption(
-            "Extracted directly from the resume before generating career recommendations."
-        )
+       
 
         st.subheader("📄 Summary")
 
