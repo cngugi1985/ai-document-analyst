@@ -6,8 +6,13 @@ from openai import OpenAI
 
 load_dotenv()
 
+api_key = st.secrets.get(
+    "OPENAI_API_KEY",
+    os.getenv("OPENAI_API_KEY")
+)
+
 client = OpenAI(
-    api_key=st.secrets["OPENAI_API_KEY"]
+    api_key=api_key
 )
 
 SYSTEM_PROMPT = """
