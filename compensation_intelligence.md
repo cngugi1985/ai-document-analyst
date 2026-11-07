@@ -2,7 +2,9 @@ CC AI Compensation Intelligence
 
 Vision
 
-Provide reliable state-level compensation intelligence based on trusted salary data sources.
+Provide reliable compensation intelligence based on trusted external data sources.
+
+CC AI will help users understand compensation opportunities by occupation and state without relying on AI-generated salary estimates.
 
 Primary Data Source
 
@@ -12,7 +14,7 @@ Future Data Sources
 O\*NET
 Salary.com (validation only)
 Pay transparency datasets
-Occupations To Start With
+Initial Occupations
 
 Quality Engineer
 Manufacturing Engineer
@@ -22,20 +24,20 @@ Operations Manager
 Quality Manager
 Business Analyst
 Supply Chain Manager
-States To Start With
+Initial States
 
 Massachusetts
 New Hampshire
 Texas
 California
 Florida
-Target User Experience
+User Experience
 
-Resume ↓ Role Identified ↓ Occupation Identified ↓ State Compensation Intelligence
+Resume ↓ Occupation Identified ↓ Compensation Intelligence
 
 Example:
 
-Quality Engineer
+Role: Quality Engineer
 
 National Median: $X
 
@@ -47,26 +49,54 @@ California: $X
 
 Florida: $X
 
-Questions To Answer
+Source: Bureau of Labor Statistics
 
-Data Questions
+Internal Architecture
 
-Can BLS provide salary data by state?
-Can BLS provide salary data by occupation?
-How often is BLS salary data updated?
-Can CC AI legally use BLS salary data?
-Can CC AI map resume occupations to BLS occupations?
-Product Questions
+Resume Title ↓ Occupation Mapping ↓ BLS Occupation ↓ Compensation Data
 
-Should compensation be shown as:
-Median Salary
-Salary Range
-Percentile Range
-Should users compare:
+Note:
 
-National vs State
-State vs State
-Should compensation intelligence be:
+Users should never see BLS occupation mappings.
 
-Automatic
-User selected
+Example:
+
+Quality Engineer ↓ Industrial Engineers ↓ BLS Wage Data
+
+This process is internal to CC AI.
+
+Occupation Mapping
+
+Quality Engineer → Industrial Engineers
+
+Manufacturing Engineer → Industrial Engineers
+
+Mechanical Engineer → Mechanical Engineers
+
+Project Manager → Project Management Specialists
+
+Operations Manager → General and Operations Managers
+
+Quality Manager → Industrial Production Managers
+
+Business Analyst → Management Analysts
+
+Supply Chain Manager → Logisticians
+
+MVP Success Criteria
+
+CC AI can:
+
+Identify occupation from a resume
+Map occupation to BLS occupation data
+Display national compensation
+Display state compensation
+Cite data source
+What We Will Not Build
+
+Career roadmaps
+Future salary predictions
+Promotion probability scores
+Future role predictions
+AI-generated compensation estimates
+All compensation information must come from trusted data sources.
