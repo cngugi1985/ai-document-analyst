@@ -21,12 +21,19 @@ def get_compensation_intelligence(job_title, state):
     if not data:
         return None
 
+    state_compensation = data["states"].get(state)
+
+    difference = (
+        state_compensation
+        - data["national_median"]
+    )
+
     return {
         "job_title": job_title,
         "occupation": occupation,
         "national_median": data["national_median"],
         "state": state,
-        "state_compensation":
-            data["states"].get(state),
+        "state_compensation": state_compensation,
+        "difference": difference,
         "source": "BLS"
     }
