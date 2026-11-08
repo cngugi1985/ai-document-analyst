@@ -102,17 +102,31 @@ def generate_improvements(text):
                 "content": f"""
                 Review this resume.
 
-                Provide:
-                - 3 improvement suggestions
-                - Missing keywords
-                - Ways to make achievements stronger
-                - Use 'you' and 'your'
-                - Never use the candidate's name
-                - Never refer to the user in third person
+Provide EXACTLY these sections:
 
-                Resume:
+Top 3 Improvement Suggestions
 
-                {text}
+- Exactly 3 items
+
+Top ATS Opportunities
+
+- Exactly 3 items
+- Only recommend ATS opportunities that are genuinely absent or underrepresented.
+
+Rules:
+
+- Focus only on high-impact recommendations
+- Avoid generic advice
+- ATS opportunities must be role-specific
+- Do not recommend skills or terms already strongly represented in the resume
+- Be concise
+- Use 'you' and 'your'
+- Never use the candidate's name
+- Never refer to the user in third person
+
+Resume:
+
+{text}
                 """
             }
         ],
@@ -152,7 +166,7 @@ No extra text.
                 """
             }
         ],
-        max_tokens=800
+        max_tokens=300
     )
 
     return response.choices[0].message.content

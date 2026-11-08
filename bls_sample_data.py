@@ -47,6 +47,19 @@ COMPENSATION_DATA = {
         }
     },
 
+    "Quality Managers": {
+
+         "national_median": 118000,
+
+         "states": {
+             "Massachusetts": 135000,
+             "New Hampshire": 122000,
+             "Texas": 112000,
+             "California": 145000,
+             "Florida": 104000
+     }
+    },
+
     "General and Operations Managers": {
 
         "national_median": 112000,

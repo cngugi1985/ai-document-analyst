@@ -55,13 +55,13 @@ if uploaded_file:
     ]
     recommended_certifications = "\n".join(certifications[:2])
 
-    dashboard_tab, cert_tab, market_tab = st.tabs(
-        [
-            "📊 Dashboard",
-            "🎓 Certifications",
-            "📈 Market Intelligence"
-        ]
-    )
+    market_tab, dashboard_tab, cert_tab = st.tabs(
+    [
+        "📈 Market Intelligence",
+        "📊 Dashboard",
+        "🎓 Certifications"
+    ]
+)
     # =========================
     # DASHBOARD
     # =========================
@@ -73,14 +73,11 @@ if uploaded_file:
             resume_score
         )
 
-        st.metric(
-            "Pages",
-            page_count
-        )
+    
 
-        st.subheader("📄 Summary")
+        # st.subheader("📄 Summary")
 
-        st.markdown(summary)
+        # st.markdown(summary)
 
         st.divider()
 

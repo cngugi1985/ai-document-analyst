@@ -16,6 +16,10 @@ OCCUPATION_MAPPING = {
 
     "Project Manager": "Project Management Specialists",
 
+    "Quality Manager": "Industrial Production Managers",
+
+    "QMS Manager": "Industrial Production Managers",
+
     "Operations Manager": "General and Operations Managers",
 
     "Quality Manager": "Industrial Production Managers",
