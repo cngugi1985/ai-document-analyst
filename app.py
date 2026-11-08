@@ -240,8 +240,7 @@ if uploaded_file:
             st.divider()
 
         st.write(current_role)
-
-       
+        
         st.caption(
             "Source: Bureau of Labor Statistics (OEWS Wage Data)"
         )
