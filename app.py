@@ -135,6 +135,10 @@ if uploaded_file:
                 f"**Detected Role:** {current_role}"
             )
 
+            st.caption(
+    "Compensation estimates are currently based on sample data."
+)
+
             st.metric(
                 "National Median",
                 f"${market_data['national_median']:,}"
