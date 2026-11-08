@@ -178,9 +178,7 @@ if uploaded_file:
                 - lowest[1]["state_compensation"]
             )
 
-            st.success(
-                f"{highest[0]} pays ${gap:,} more than {lowest[0]} for this occupation."
-            )
+            
 
             ranked_states = sorted(
                 available_market_data,
@@ -240,18 +238,9 @@ if uploaded_file:
 
             st.divider()
 
-        st.subheader("Role")
-
         st.write(current_role)
 
-        
-
-        if available_market_data:
-
-            st.write(
-                f"**Occupation:** {available_market_data[0][1]['occupation']}"
-            )
-
+       
         st.caption(
             "Source: Bureau of Labor Statistics (OEWS Wage Data)"
         )
