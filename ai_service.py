@@ -6,10 +6,10 @@ from openai import OpenAI
 
 load_dotenv()
 
-api_key = st.secrets.get(
-    "OPENAI_API_KEY",
-    os.getenv("OPENAI_API_KEY")
-)
+try:
+    api_key = st.secrets["OPENAI_API_KEY"]
+except Exception:
+    api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(
     api_key=api_key

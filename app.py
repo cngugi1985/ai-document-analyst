@@ -52,12 +52,13 @@ if uploaded_file:
 ]
     recommended_certifications = "\n".join(certifications[:2])
 
-    dashboard_tab, cert_tab = st.tabs(
-        [
-            "📊 Dashboard",
-            "🎓 Certifications"
-        ]
-    )
+    dashboard_tab, cert_tab, market_tab = st.tabs(
+    [
+        "📊 Dashboard",
+        "🎓 Certifications",
+        "📈 Market Intelligence"
+    ]
+)
     # =========================
     # DASHBOARD
     # =========================
@@ -97,3 +98,30 @@ if uploaded_file:
 
         for cert in certifications[:2]:
             st.markdown(f"• {cert}")
+
+    with market_tab:
+
+        st.subheader("📈 Market Intelligence")
+
+        st.info(
+            "Market Intelligence is currently in preview."
+        )
+
+        st.metric(
+            "National Median",
+            "$108,000"
+        )
+
+        st.metric(
+            "Massachusetts",
+            "$125,000"
+        )
+
+        st.metric(
+            "Difference",
+            "+$17,000"
+        )
+
+        st.caption(
+            "Source: Bureau of Labor Statistics (Sample Data)"
+        )
