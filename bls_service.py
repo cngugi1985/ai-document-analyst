@@ -13,6 +13,9 @@ def get_compensation_intelligence(job_title, state):
 
     occupation = get_bls_occupation(job_title)
 
+    print(f"JOB TITLE: {job_title}")
+    print(f"MAPPED OCCUPATION: {occupation}")
+
     if not occupation:
         return None
 
