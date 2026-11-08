@@ -103,68 +103,155 @@ if uploaded_file:
         for cert in certifications[:2]:
             st.markdown(f"• {cert}")
 
+            # =========================
+    # MARKET INTELLIGENCE
+    # =========================
+
     with market_tab:
 
         st.subheader("📈 Market Intelligence")
 
-        selected_state = st.selectbox(
-            "Select State",
-            US_STATES
-        )
+        col1, col2, col3 = st.columns(3)
 
-        market_data = get_compensation_intelligence(
+        with col1:
+            state_1 = st.selectbox(
+                "State 1",
+                US_STATES,
+                index=4
+            )
+
+        with col2:
+            state_2 = st.selectbox(
+                "State 2",
+                US_STATES,
+                index=43
+            )
+
+        with col3:
+            state_3 = st.selectbox(
+                "State 3",
+                US_STATES,
+                index=29
+            )
+
+        market_data_1 = get_compensation_intelligence(
             current_role,
-            selected_state
+            state_1
         )
 
-        st.info(
-            "Market Intelligence is currently in preview."
+        market_data_2 = get_compensation_intelligence(
+            current_role,
+            state_2
         )
 
-        if market_data:
+        market_data_3 = get_compensation_intelligence(
+            current_role,
+            state_3
+        )
+
+        available_market_data = [
+            (state_1, market_data_1),
+            (state_2, market_data_2),
+            (state_3, market_data_3)
+        ]
+
+        available_market_data = [
+            item
+            for item in available_market_data
+            if item[1]
+        ]
+
+        if len(available_market_data) >= 2:
+
+            highest = max(
+                available_market_data,
+                key=lambda x: x[1]["state_compensation"]
+            )
+
+            lowest = min(
+                available_market_data,
+                key=lambda x: x[1]["state_compensation"]
+            )
+
+            gap = (
+                highest[1]["state_compensation"]
+                - lowest[1]["state_compensation"]
+            )
+
+            st.success(
+                f"{highest[0]} pays ${gap:,} more than {lowest[0]} for this occupation."
+            )
+
+            ranked_states = sorted(
+                available_market_data,
+                key=lambda x: x[1]["state_compensation"],
+                reverse=True
+            )
+
+            medals = {}
+
+            for i, (state, data) in enumerate(
+                ranked_states,
+                start=1
+            ):
+                medals[state] = {
+                    1: "🥇",
+                    2: "🥈",
+                    3: "🥉"
+                }.get(i, "")
+
+            comparison_col1, comparison_col2, comparison_col3 = st.columns(3)
+
+            with comparison_col1:
+
+                st.markdown(
+    f"### {medals.get(state_1,'')} {state_1}"
+)
+
+                if market_data_1:
+                    st.metric(
+                        "Annual Wage",
+                        f"${market_data_1['state_compensation']:,}"
+                    )
+
+            with comparison_col2:
+
+                st.markdown(
+    f"### {medals.get(state_2,'')} {state_2}"
+)
+
+                if market_data_2:
+                    st.metric(
+                        "Annual Wage",
+                        f"${market_data_2['state_compensation']:,}"
+                    )
+
+            with comparison_col3:
+
+                st.markdown(
+    f"### {medals.get(state_3,'')} {state_3}"
+)
+
+                if market_data_3:
+                    st.metric(
+                        "Annual Wage",
+                        f"${market_data_3['state_compensation']:,}"
+                    )
+
+            st.divider()
+
+        st.subheader("Role")
+
+        st.write(current_role)
+
+        
+
+        if available_market_data:
 
             st.write(
-                f"**Detected Role:** {current_role}"
+                f"**Occupation:** {available_market_data[0][1]['occupation']}"
             )
 
-            st.caption(
-                "Compensation estimates are currently based on sample data."
-           )
-
-            st.metric(
-                "National Median",
-                f"${market_data['national_median']:,}"
-            )
-
-            st.metric(
-                selected_state,
-                f"${market_data['state_compensation']:,}"
-            )
-
-            difference = (
-                market_data["state_compensation"]
-                - market_data["national_median"]
-            )
-
-            st.metric(
-                "Difference",
-                f"${difference:+,}"
-            )
-
-            if difference > 0:
-                st.success(
-                    f"{selected_state} is ${difference:,} above the national median for your role."
-                )
-            else:
-                st.warning(
-                    f"{selected_state} is ${abs(difference):,} below the national median for your role."
-                )
-
-            st.caption(
-                "Source: Bureau of Labor Statistics (Sample Data)"
-            )
-
-        else:
-            st.info(
-                f"Compensation data for {selected_state} will be available in a future update."
-            )
+        st.caption(
+            "Source: Bureau of Labor Statistics (OEWS Wage Data)"
+        )
