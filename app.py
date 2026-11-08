@@ -139,12 +139,7 @@ if uploaded_file:
             state_1
         )
 
-        st.write("LOOKUP RESULT:", market_data_1)
-
-        st.write(current_role)
-
-
-
+        
         market_data_2 = get_compensation_intelligence(
             current_role,
             state_2
