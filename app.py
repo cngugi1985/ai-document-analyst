@@ -139,6 +139,9 @@ if uploaded_file:
             state_1
         )
 
+        st.write("DEBUG ROLE:", current_role)
+        st.write("DEBUG DATA:", market_data_1)
+
         market_data_2 = get_compensation_intelligence(
             current_role,
             state_2
