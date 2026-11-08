@@ -14,14 +14,16 @@ def get_real_compensation(
     occupation,
     state
 ):
-    occupation = str(occupation).strip()
-    state = str(state).strip()
+    print(f"LOOKUP OCCUPATION: {occupation}")
+    print(f"LOOKUP STATE: {state}")
 
     result = df[
         (df["occ_title"].str.lower() == occupation.lower())
         &
         (df["state"].str.lower() == state.lower())
     ]
+
+    print(f"MATCHES FOUND: {len(result)}")
 
     if result.empty:
         return None
