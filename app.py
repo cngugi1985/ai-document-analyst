@@ -139,6 +139,8 @@ if uploaded_file:
             state_1
         )
 
+        st.write("LOOKUP RESULT:", market_data_1)
+
         st.write(current_role)
 
 
