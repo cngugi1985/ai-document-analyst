@@ -6,7 +6,7 @@ to provide compensation intelligence.
 """
 
 from occupation_mapping import get_bls_occupation
-from bls_sample_data import COMPENSATION_DATA
+from real_bls_lookup import COMPENSATION_DATA
 
 
 def get_compensation_intelligence(job_title, state):
