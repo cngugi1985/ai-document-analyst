@@ -12,6 +12,8 @@ OCCUPATION_MAPPING = {
 
     "Mechanical Engineer": "Mechanical Engineers",
 
+    "Staff Engineer": "Industrial Engineers",
+
     "Project Manager": "Project Management Specialists",
 
     "Operations Manager": "General and Operations Managers",
@@ -22,6 +24,7 @@ OCCUPATION_MAPPING = {
 
     "Supply Chain Manager": "Logisticians"
 }
+
 
 
 def get_bls_occupation(job_title):

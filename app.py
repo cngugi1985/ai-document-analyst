@@ -1,3 +1,4 @@
+from bls_service import get_compensation_intelligence
 import streamlit as st
 
 import ai_service
@@ -43,22 +44,24 @@ if uploaded_file:
         recommended_certifications = (
             ai_service.generate_recommended_certifications(text)
         )
+        current_role = ai_service.extract_current_role(text)
 
-    
+        
+
     certifications = [
-    cert.strip()
-    for cert in recommended_certifications.splitlines()
-    if cert.strip()
-]
+        cert.strip()
+        for cert in recommended_certifications.splitlines()
+        if cert.strip()
+    ]
     recommended_certifications = "\n".join(certifications[:2])
 
     dashboard_tab, cert_tab, market_tab = st.tabs(
-    [
-        "📊 Dashboard",
-        "🎓 Certifications",
-        "📈 Market Intelligence"
-    ]
-)
+        [
+            "📊 Dashboard",
+            "🎓 Certifications",
+            "📈 Market Intelligence"
+        ]
+    )
     # =========================
     # DASHBOARD
     # =========================
@@ -70,7 +73,10 @@ if uploaded_file:
             resume_score
         )
 
-       
+        st.metric(
+            "Pages",
+            page_count
+        )
 
         st.subheader("📄 Summary")
 
@@ -103,25 +109,61 @@ if uploaded_file:
 
         st.subheader("📈 Market Intelligence")
 
+        selected_state = st.selectbox(
+            "Select State",
+            [
+                "Massachusetts",
+                "New Hampshire",
+                "Texas",
+                "California",
+                "Florida"
+            ]
+        )
+
+        market_data = get_compensation_intelligence(
+            current_role,
+            selected_state
+        )
+
         st.info(
             "Market Intelligence is currently in preview."
         )
 
-        st.metric(
-            "National Median",
-            "$108,000"
-        )
+        if market_data:
 
-        st.metric(
-            "Massachusetts",
-            "$125,000"
-        )
+            st.write(
+                f"**Detected Role:** {current_role}"
+            )
 
-        st.metric(
-            "Difference",
-            "+$17,000"
-        )
+            st.metric(
+                "National Median",
+                f"${market_data['national_median']:,}"
+            )
 
-        st.caption(
-            "Source: Bureau of Labor Statistics (Sample Data)"
-        )
+            st.metric(
+                selected_state,
+                f"${market_data['state_compensation']:,}"
+            )
+
+            difference = (
+                market_data["state_compensation"]
+                - market_data["national_median"]
+            )
+
+            st.metric(
+                "Difference",
+                f"${difference:+,}"
+            )
+
+            if difference > 0:
+                st.success(
+                    f"{selected_state} is ${difference:,} above the national median for your role."
+                )
+            else:
+                st.warning(
+                    f"{selected_state} is ${abs(difference):,} below the national median for your role."
+                )
+
+            st.caption(
+                "Source: Bureau of Labor Statistics (Sample Data)"
+            )
