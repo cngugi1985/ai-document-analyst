@@ -23,6 +23,9 @@ def get_compensation_intelligence(job_title, state):
 
     state_compensation = data["states"].get(state)
 
+    if state_compensation is None:
+        return None
+
     difference = (
         state_compensation
         - data["national_median"]

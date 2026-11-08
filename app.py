@@ -1,4 +1,5 @@
 from bls_service import get_compensation_intelligence
+from states import US_STATES
 import streamlit as st
 
 import ai_service
@@ -108,13 +109,7 @@ if uploaded_file:
 
         selected_state = st.selectbox(
             "Select State",
-            [
-                "Massachusetts",
-                "New Hampshire",
-                "Texas",
-                "California",
-                "Florida"
-            ]
+            US_STATES
         )
 
         market_data = get_compensation_intelligence(
@@ -133,8 +128,8 @@ if uploaded_file:
             )
 
             st.caption(
-    "Compensation estimates are currently based on sample data."
-)
+                "Compensation estimates are currently based on sample data."
+           )
 
             st.metric(
                 "National Median",
@@ -167,4 +162,9 @@ if uploaded_file:
 
             st.caption(
                 "Source: Bureau of Labor Statistics (Sample Data)"
+            )
+
+        else:
+            st.info(
+                f"Compensation data for {selected_state} will be available in a future update."
             )
