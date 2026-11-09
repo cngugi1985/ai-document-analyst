@@ -6,6 +6,7 @@ to provide compensation intelligence.
 """
 
 from occupation_mapping import get_bls_occupation
+from occupation_matcher import find_matching_occupation
 from real_bls_lookup import get_real_compensation
 
 
@@ -15,6 +16,11 @@ def get_compensation_intelligence(job_title, state):
 
     print(f"JOB TITLE: {job_title}")
     print(f"MAPPED OCCUPATION: {occupation}")
+
+    if not occupation:
+        occupation = find_matching_occupation(
+            job_title
+        )
 
     if not occupation:
         return None
