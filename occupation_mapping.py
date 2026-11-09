@@ -26,7 +26,9 @@ OCCUPATION_MAPPING = {
 
     "Business Analyst": "Management Analysts",
 
-    "Supply Chain Manager": "Logisticians"
+    "Supply Chain Manager": "Logisticians",
+
+    "Teaching Assistant": "Teaching Assistants, Postsecondary",
 }
 
 
