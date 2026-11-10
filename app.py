@@ -8,11 +8,11 @@ import ai_service
 
 from pdf_processor import extract_text_from_pdf
 st.set_page_config(
-    page_title="CC AI",
+    page_title="CareerIQ",
     layout="wide"
 )
 
-st.title("🚀 CC AI")
+st.title("🚀 CareerIQ")
 st.markdown("""
 <style>
 
