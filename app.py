@@ -1,5 +1,7 @@
 from bls_service import get_compensation_intelligence
+from roi_service import get_roi_salary
 from states import US_STATES
+
 import streamlit as st
 
 import ai_service
@@ -47,8 +49,7 @@ if uploaded_file:
         )
         current_role = ai_service.extract_current_role(text)
 
-        
-
+    
     certifications = [
         cert.strip()
         for cert in recommended_certifications.splitlines()
@@ -150,6 +151,21 @@ if uploaded_file:
             state_3
         )
 
+        roi_1 = get_roi_salary(
+            market_data_1["state_compensation"],
+            state_1
+        )
+
+        roi_2 = get_roi_salary(
+            market_data_2["state_compensation"],
+            state_2
+        )
+
+        roi_3 = get_roi_salary(
+            market_data_3["state_compensation"],
+            state_3
+        )
+
         available_market_data = [
             (state_1, market_data_1),
             (state_2, market_data_2),
@@ -202,10 +218,9 @@ if uploaded_file:
             comparison_col1, comparison_col2, comparison_col3 = st.columns(3)
 
             with comparison_col1:
-
                 st.markdown(
-    f"### {medals.get(state_1,'')} {state_1}"
-)
+                    f"### {medals.get(state_1, '')} {state_1}"
+                )
 
                 if market_data_1:
                     st.metric(
@@ -213,11 +228,14 @@ if uploaded_file:
                         f"${market_data_1['state_compensation']:,}"
                     )
 
-            with comparison_col2:
+                    st.caption(
+                        f"Purchasing Power: ${roi_1:,}"
+                    )
 
+            with comparison_col2:
                 st.markdown(
-    f"### {medals.get(state_2,'')} {state_2}"
-)
+                    f"### {medals.get(state_2, '')} {state_2}"
+                )
 
                 if market_data_2:
                     st.metric(
@@ -225,16 +243,23 @@ if uploaded_file:
                         f"${market_data_2['state_compensation']:,}"
                     )
 
-            with comparison_col3:
+                    st.caption(
+                        f"Purchasing Power: ${roi_2:,}"
+                    )
 
+            with comparison_col3:
                 st.markdown(
-    f"### {medals.get(state_3,'')} {state_3}"
-)
+                    f"### {medals.get(state_3, '')} {state_3}"
+                )
 
                 if market_data_3:
                     st.metric(
                         "Annual Wage",
                         f"${market_data_3['state_compensation']:,}"
+                    )
+
+                    st.caption(
+                        f"Purchasing Power: ${roi_3:,}"
                     )
 
             st.divider()
