@@ -267,5 +267,5 @@ if uploaded_file:
         st.write(current_role)
         
         st.caption(
-            "Source: Bureau of Labor Statistics (OEWS Wage Data)"
-        )
+            "Data Sources: U.S. Bureau of Labor Statistics (OEWS) and U.S. Bureau of Economic Analysis (Regional Price Parities)"
+       )
