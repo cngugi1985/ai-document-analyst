@@ -195,18 +195,22 @@ if uploaded_file:
                 - lowest[1]["state_compensation"]
             )
 
-            
+            roi_ranking = [
+                (state_1, roi_1, market_data_1),
+                (state_2, roi_2, market_data_2),
+                (state_3, roi_3, market_data_3)
+            ]
 
-            ranked_states = sorted(
-                available_market_data,
-                key=lambda x: x[1]["state_compensation"],
+            roi_ranking = sorted(
+                roi_ranking,
+                key=lambda x: x[1],
                 reverse=True
             )
 
             medals = {}
 
-            for i, (state, data) in enumerate(
-                ranked_states,
+            for i, (state, roi, data) in enumerate(
+                roi_ranking,
                 start=1
             ):
                 medals[state] = {
@@ -214,6 +218,13 @@ if uploaded_file:
                     2: "🥈",
                     3: "🥉"
                 }.get(i, "")
+
+            best_state = roi_ranking[0][0]
+            best_roi = roi_ranking[0][1]
+
+            st.success(
+                f"🏆 Best Value: {best_state} delivers the strongest purchasing power at ${best_roi:,} after cost-of-living adjustment."
+        )
 
             comparison_col1, comparison_col2, comparison_col3 = st.columns(3)
 
@@ -224,12 +235,12 @@ if uploaded_file:
 
                 if market_data_1:
                     st.metric(
-                        "Annual Wage",
-                        f"${market_data_1['state_compensation']:,}"
+                        "💰 Real Income",
+                        f"${roi_1:,}"
                     )
 
                     st.caption(
-                        f"Purchasing Power: ${roi_1:,}"
+                        f"Annual Wage: ${market_data_1['state_compensation']:,}"
                     )
 
             with comparison_col2:
@@ -239,12 +250,12 @@ if uploaded_file:
 
                 if market_data_2:
                     st.metric(
-                        "Annual Wage",
-                        f"${market_data_2['state_compensation']:,}"
+                        "💰 Real Income",
+                        f"${roi_2:,}"
                     )
 
                     st.caption(
-                        f"Purchasing Power: ${roi_2:,}"
+                        f"Annual Wage: ${market_data_2['state_compensation']:,}"
                     )
 
             with comparison_col3:
@@ -254,13 +265,14 @@ if uploaded_file:
 
                 if market_data_3:
                     st.metric(
-                        "Annual Wage",
-                        f"${market_data_3['state_compensation']:,}"
+                        "💰 Real Income",
+                        f"${roi_3:,}"
                     )
 
                     st.caption(
-                        f"Purchasing Power: ${roi_3:,}"
+                        f"Annual Wage: ${market_data_3['state_compensation']:,}"
                     )
+
 
             st.divider()
 
@@ -268,4 +280,43 @@ if uploaded_file:
         
         st.caption(
             "Data Sources: U.S. Bureau of Labor Statistics (OEWS) and U.S. Bureau of Economic Analysis (Regional Price Parities)"
-       )
+        )
+
+
+class get(dict):
+    """A concrete dictionary-like object with safe, useful access patterns."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        if args or kwargs:
+            self.update(*args, **kwargs)
+
+    def __getitem__(self, key):
+        if key not in self:
+            raise KeyError(key)
+        return super().__getitem__(key)
+
+    def get(self, key, default=None):
+        return super().get(key, default)
+
+    def setdefault(self, key, default=None):
+        return super().setdefault(key, default)
+
+    def update(self, *args, **kwargs):
+        for mapping in args:
+            if hasattr(mapping, "items"):
+                for k, v in mapping.items():
+                    super().__setitem__(k, v)
+            else:
+                for k, v in mapping:
+                    super().__setitem__(k, v)
+
+        for key, value in kwargs.items():
+            super().__setitem__(key, value)
+
+    def pop(self, key, default=None):
+        if key in self:
+            return super().pop(key)
+        if default is not None:
+            return default
+        raise KeyError(key)
